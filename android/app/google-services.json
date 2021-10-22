@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "200870660586",
+    "project_id": "tutorhaus-ba250",
+    "storage_bucket": "tutorhaus-ba250.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200870660586:android:a43a1114f822e95bf50a93",
+        "android_client_info": {
+          "package_name": "tutorhausdev.TutorHaus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200870660586-8jssuvndo3cb0kkc6hl88crqiq4kqub6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tutorhausdev.TutorHaus",
+            "certificate_hash": "800ae1db2b158a12bbe950165023b5ee0a248c75"
+          }
+        },
+        {
+          "client_id": "200870660586-mhvfh4cpfgeo55fbddrvln4ik8e9a91d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgM4Rz3tQ2sQ9pN6Cu9GP8j-AZdQBt4G8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200870660586-mhvfh4cpfgeo55fbddrvln4ik8e9a91d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "200870660586-4lmnbbclnr5pphnq0mnkus8tlvt5e3lv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "tutorhausdev.TutorHaus",
+                "app_store_id": "1567811719"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
