@@ -14,9 +14,9 @@ class ClassCard extends StatelessWidget {
     return InkWell(
       onTap: callback,
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(16),
+        // ),
         child: Container(
           padding: EdgeInsets.all(16),
           child: Column(
@@ -33,7 +33,7 @@ class ClassCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "เปลี่ยนแปลง",
+                    model.statusChanged ? "เปลี่ยนแปลง" : "",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
@@ -66,7 +66,8 @@ class ClassCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "วันที่: ${model.date}\nเวลา ${model.time}",
+                    "วันที่: ${model.date}\nเวลา: ${model.time}\nสถานที่: ${model.location}",
+//                   "วันที่: ${model.date}\nเวลา: ${model.time}",
                     style: TextStyle(fontSize: 17),
                   ),
                   Text(

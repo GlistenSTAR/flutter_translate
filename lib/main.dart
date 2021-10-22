@@ -12,6 +12,9 @@ import 'package:provider/provider.dart';
 import 'package:tutor/provider/home_provider.dart';
 import 'package:tutor/utils/globals.dart';
 import 'package:tutor/view/auth/login_page.dart';
+import 'package:tutor/view/tutor/main_tutor.dart';
+
+import 'view/student/main_student.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -94,7 +97,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.promptTextTheme(
             Theme.of(context).textTheme,
           ),
-          fontFamily: GoogleFonts.prompt().fontFamily,
+          fontFamily: 'Prompt',
         ),
         // darkTheme: ThemeData(
         //   brightness: Brightness.dark,
@@ -102,6 +105,7 @@ class MyApp extends StatelessWidget {
         // ),
         // themeMode: ThemeMode.dark,
         home: LoginPage(),
+        // home: MainTutor(),
       ),
     );
   }

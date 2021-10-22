@@ -110,6 +110,22 @@ class _TeachLocationState extends State<TeachLocation> {
     );
   }
 
+  static Future<void> updateInfoprogress(
+      String uid,
+      Map<String, dynamic> subjectLevels,
+      List<String> locations,
+      List<dynamic> testings,
+      Map<String, dynamic> data) async {
+    Util.deleteTutorFromSubjectPool(
+        Globals.currentUser!.uid, subjectLevels, locations);
+    Util.deleteTutorFromTestingPool(
+        Globals.currentUser!.uid, testings, locations);
+    Util.addTutorToSubjectPool(
+        Globals.currentUser!.uid, subjectLevels, locations);
+    Util.addTutorToTestingPool(Globals.currentUser!.uid, testings, locations);
+    Util.updateTeachLocation(Globals.currentUser!.uid, data);
+  }
+
   void updateInfo() async {
     List<String> locations = myLocations.map<String>((e) => e.nameID).toList();
 
@@ -118,45 +134,12 @@ class _TeachLocationState extends State<TeachLocation> {
     await showDialog(
       context: context,
       builder: (context) => FutureProgressDialog(
-        Util.deleteTutorFromSubjectPool(
+        updateInfoprogress(
             Globals.currentUser!.uid,
             widget.info["subject_levels"] ?? {},
-            widget.info["locations"] ?? []),
-        message: Text('Please wait for a moment...'),
-      ),
-    );
-
-    await showDialog(
-      context: context,
-      builder: (context) => FutureProgressDialog(
-        Util.deleteTutorFromTestingPool(Globals.currentUser!.uid,
-            widget.info["testings"] ?? [], widget.info["locations"] ?? []),
-        message: Text('Please wait for a moment...'),
-      ),
-    );
-
-    await showDialog(
-      context: context,
-      builder: (context) => FutureProgressDialog(
-        Util.addTutorToSubjectPool(Globals.currentUser!.uid,
-            widget.info["subject_levels"] ?? {}, locations),
-        message: Text('Please wait for a moment...'),
-      ),
-    );
-
-    await showDialog(
-      context: context,
-      builder: (context) => FutureProgressDialog(
-        Util.addTutorToTestingPool(
-            Globals.currentUser!.uid, widget.info["testings"] ?? [], locations),
-        message: Text('Please wait for a moment...'),
-      ),
-    );
-
-    await showDialog(
-      context: context,
-      builder: (context) => FutureProgressDialog(
-        Util.updateTeachLocation(Globals.currentUser!.uid, data),
+            locations,
+            widget.info["testings"] ?? [],
+            data),
         message: Text('Please wait for a moment...'),
       ),
     );

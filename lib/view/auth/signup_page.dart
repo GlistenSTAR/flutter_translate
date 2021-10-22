@@ -2,13 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
+import 'package:tutor/model/StringsModel.dart';
 import 'package:tutor/utils/const.dart';
 import 'package:tutor/utils/util.dart';
 import 'package:tutor/view/student/profile/privacy_policy.dart';
 import 'package:tutor/view/student/profile/terms_condition.dart';
 import 'package:tutor/view/student/schedule/calendar_page.dart';
 import 'package:tutor/view/tutor/register/quiz_page.dart';
+import 'package:tutor/widget/choose_string.dart';
 import 'package:tutor/widget/profile_cell.dart';
+import 'package:tutor/widget/select_string.dart';
 
 class SignupPage extends StatefulWidget {
   SignupPage({Key? key, required this.isTutor}) : super(key: key);
@@ -36,6 +39,8 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController tePhone = TextEditingController();
   final TextEditingController teLineID = TextEditingController();
   final TextEditingController teAddress = TextEditingController();
+
+  late StringsModel selectedString = StringsModel(stringID: "", stringTH: "");
 
   bool agreeToPolicy = false, agreeToTerm = false;
 
@@ -75,6 +80,7 @@ class _SignupPageState extends State<SignupPage> {
                       child: Icon(
                         Icons.close,
                         color: Colors.white,
+                        size: 16,
                       ),
                     ),
                   )
@@ -190,19 +196,42 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     Divider(height: 4),
-                    TextField(
-                      controller: teGender,
-                      readOnly: true,
-                      onTap: () => showGenderSheet(context),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(color: COLOR.DARK_GREY),
-                        hintText: "เพศ(Gender)",
-                      ),
+                    // TextField(
+                    //   controller: teGender,
+                    //   readOnly: true,
+                    //   onTap: () => showGenderSheet(context),
+                    //   style: TextStyle(
+                    //     fontSize: 16,
+                    //     fontWeight: FontWeight.w500,
+                    //   ),
+                    //   decoration: InputDecoration(
+                    //     border: InputBorder.none,
+                    //     hintStyle: TextStyle(color: COLOR.DARK_GREY),
+                    //     hintText: "เพศ(Gender)",
+                    //   ),
+                    // ),
+                    ChooseString(
+                      placeholder: "เพศ",
+                      selected: selectedString,
+                      callback: () async {
+                        dynamic result = await Navigator.of(context).push(
+                          PageRouteBuilder(
+                            opaque: false,
+                            barrierColor: Colors.black54,
+                            pageBuilder: (_, __, ___) => SelectString(
+                              title: "เลือกเพศ",
+                              selected: selectedString,
+                              models: StringsModel.getGenders(),
+                            ),
+                          ),
+                        );
+
+                        if (result != null && result is StringsModel) {
+                          setState(() {
+                            selectedString = result;
+                          });
+                        }
+                      },
                     ),
                     Divider(height: 4),
                     TextField(
@@ -372,9 +401,10 @@ class _SignupPageState extends State<SignupPage> {
                 child: Text(
                   isTutor ? "ทำแบบทดสอบ" : "ลงทะเบียน",
                   style: TextStyle(
+                    fontFamily: 'Prompt',
                     color: COLOR.YELLOW,
                     fontWeight: FontWeight.bold,
-                    fontSize: 24,
+                    fontSize: 20,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -572,7 +602,7 @@ class _SignupPageState extends State<SignupPage> {
     String cpassword = teConfirm.text;
     String name = teName.text;
     String nickname = teNickname.text;
-    String gender = teGender.text;
+    String gender = selectedString.stringTH;
     String birthday = teBirthday.text;
     String phone = tePhone.text;
     String lineID = teLineID.text;

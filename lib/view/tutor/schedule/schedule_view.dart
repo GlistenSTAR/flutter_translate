@@ -38,245 +38,251 @@ class _ScheduleViewState extends State<ScheduleView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text(
-            "ตารางสอนของฉัน",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 20,
-              color: COLOR.BLUE,
+    return Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text(
+                "ตารางสอนของฉัน",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  color: COLOR.BLUE,
+                ),
+              ),
             ),
-          ),
-        ),
-        Container(
-          color: COLOR.YELLOW,
-          padding: EdgeInsets.all(8),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  _currentMonth,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  dynamic result = await Navigator.of(context).push(
-                    PageRouteBuilder(
-                      opaque: false,
-                      barrierColor: Colors.black54,
-                      pageBuilder: (_, __, ___) => CalendarPage(),
+            Container(
+              color: COLOR.YELLOW,
+              padding: EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      _currentMonth,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                  );
-
-                  if (result != null && result is DateTime) {
-                    setState(() {
-                      _currentDate = result;
-                    });
-                    updateWeek(result);
-                  }
-                },
-                child: Image.asset("images/calendar_today.png"),
-              )
-            ],
-          ),
-        ),
-        Container(
-          color: COLOR.BLUE,
-          height: 70,
-          padding: EdgeInsets.symmetric(horizontal: 4),
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                onTap: () {
-                  //Previous
-                  DateTime date = _weekDate.subtract(Duration(days: 7));
-                  updateWeek(date);
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                ),
-              ),
-              Flexible(
-                child: ListView.separated(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      DateTime date = _weekDate.add(Duration(days: index));
-
-                      DateFormat abbrWeek = DateFormat.E();
-                      String week = abbrWeek.format(date);
-                      DateFormat formatter = DateFormat("dd/MM");
-                      String dayString = formatter.format(date);
-
-                      bool isActive = DateFormat.yMd().format(_currentDate) ==
-                          DateFormat.yMd().format(date);
-
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            _currentDate = date;
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: isActive ? COLOR.YELLOW : Colors.transparent,
-                          ),
-                          padding: EdgeInsets.all(7),
-                          child: Column(
-                            children: [
-                              Text(
-                                week,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Text(
-                                dayString,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      dynamic result = await Navigator.of(context).push(
+                        PageRouteBuilder(
+                          opaque: false,
+                          barrierColor: Colors.black54,
+                          pageBuilder: (_, __, ___) => CalendarPage(),
                         ),
                       );
+
+                      if (result != null && result is DateTime) {
+                        setState(() {
+                          _currentDate = result;
+                        });
+                        updateWeek(result);
+                      }
                     },
-                    separatorBuilder: (_, __) => Container(),
-                    itemCount: 7),
+                    child: Image.asset("images/calendar_today.png"),
+                  )
+                ],
               ),
-              InkWell(
-                onTap: () {
-                  //Next
-                  DateTime date = _weekDate.add(Duration(days: 7));
-                  updateWeek(date);
-                },
-                child: Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Flexible(
-          child: FutureBuilder<Map<String, dynamic>>(
-              future: getClassInfo(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  Map<String, dynamic> data = snapshot.data!;
-                  List<ClassModel> classes = data["class"];
-                  slots = data["slot"];
+            ),
+            Container(
+              color: COLOR.BLUE,
+              height: 70,
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      //Previous
+                      DateTime date = _weekDate.subtract(Duration(days: 7));
+                      updateWeek(date);
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Flexible(
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          DateTime date = _weekDate.add(Duration(days: index));
 
-                  DateTime topTime = DateTime(_currentDate.year,
-                      _currentDate.month, _currentDate.day, 8);
+                          DateFormat abbrWeek = DateFormat.E();
+                          String week = abbrWeek.format(date);
+                          DateFormat formatter = DateFormat("dd/MM");
+                          String dayString = formatter.format(date);
 
-                  List<Widget> widgets = classes.map<Widget>((e) {
-                    Duration topDuration = e.begin!.difference(topTime);
-                    Duration classDuration = e.end!.difference(e.begin!);
+                          bool isActive =
+                              DateFormat.yMd().format(_currentDate) ==
+                                  DateFormat.yMd().format(date);
 
-                    return Positioned(
-                        top: 30 + topDuration.inMinutes.toDouble(),
-                        child: InkWell(
-                          onTap: () {
-                            showClassDetail(context, e);
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 88,
-                            height: classDuration.inMinutes.toDouble(),
-                            margin: EdgeInsets.only(left: 56),
-                            padding: EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: COLOR.YELLOW,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  e.beginTime,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                _currentDate = date;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: isActive
+                                    ? COLOR.YELLOW
+                                    : Colors.transparent,
+                              ),
+                              padding: EdgeInsets.all(7),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    week,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  e.title,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
+                                  Text(
+                                    dayString,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 11,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ));
-                  }).toList();
-
-                  List<Widget> invalidSlots = slots.map<Widget>((e) {
-                    return Positioned(
-                        top: 30 + e * 60,
-                        child: InkWell(
-                          onTap: () {
-                            showChangeSlot(e, false);
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 88,
-                            height: 60,
-                            margin: EdgeInsets.only(left: 56),
-                            padding: EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: COLOR.BACK_GREY,
-                            ),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "ไม่สามารถจองได้",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
+                                ],
                               ),
                             ),
-                          ),
-                        ));
-                  }).toList();
-
-                  widgets.insert(0, _backgroundWidget());
-                  widgets.addAll(invalidSlots);
-
-                  return SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Stack(
-                      children: widgets,
+                          );
+                        },
+                        separatorBuilder: (_, __) => Container(),
+                        itemCount: 7),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      //Next
+                      DateTime date = _weekDate.add(Duration(days: 7));
+                      updateWeek(date);
+                    },
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
                     ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Container();
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              }),
-        ),
-      ],
-    );
+                  ),
+                ],
+              ),
+            ),
+            Flexible(
+              child: FutureBuilder<Map<String, dynamic>>(
+                  future: getClassInfo(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      Map<String, dynamic> data = snapshot.data!;
+                      List<ClassModel> classes = data["class"];
+                      slots = data["slot"];
+
+                      DateTime topTime = DateTime(_currentDate.year,
+                          _currentDate.month, _currentDate.day, 8);
+
+                      List<Widget> widgets = classes.map<Widget>((e) {
+                        Duration topDuration = e.begin!.difference(topTime);
+                        Duration classDuration = e.end!.difference(e.begin!);
+
+                        return Positioned(
+                            top: 30 + topDuration.inMinutes.toDouble(),
+                            child: InkWell(
+                              onTap: () {
+                                showClassDetail(context, e);
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width - 88,
+                                height: classDuration.inMinutes.toDouble(),
+                                margin: EdgeInsets.only(left: 56),
+                                padding: EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: COLOR.YELLOW,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      e.beginTime,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      e.title,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ));
+                      }).toList();
+
+                      List<Widget> invalidSlots = slots.map<Widget>((e) {
+                        return Positioned(
+                            top: 30 + e * 60,
+                            child: InkWell(
+                              onTap: () {
+                                showChangeSlot(e, false);
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width - 88,
+                                height: 60,
+                                margin: EdgeInsets.only(left: 56),
+                                padding: EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: COLOR.BACK_GREY,
+                                ),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "ไม่สามารถจองได้",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ));
+                      }).toList();
+
+                      widgets.insert(0, _backgroundWidget());
+                      widgets.addAll(invalidSlots);
+
+                      return SingleChildScrollView(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Stack(
+                          children: widgets,
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Container();
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }),
+            ),
+          ],
+        ));
   }
 
   Widget _backgroundWidget() {
@@ -323,7 +329,10 @@ class _ScheduleViewState extends State<ScheduleView> {
               ),
               IconButton(
                 onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(Icons.cancel_outlined),
+                icon: Icon(
+                  Icons.cancel_outlined,
+                  size: 40,
+                ),
               ),
             ],
           ),

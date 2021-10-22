@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,16 +49,21 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: Text(
             "งานสอนทั้งหมด",
             style: TextStyle(
+              fontFamily: 'Prompt',
               fontWeight: FontWeight.w700,
-              fontSize: 20,
-              color: COLOR.BLUE,
+              fontSize: 24,
+              color: COLOR.YELLOW,
             ),
           ),
         ),
@@ -64,16 +71,25 @@ class _HomeViewState extends State<HomeView> {
           children: [
             Expanded(
               child: SearchFilter(
-                title: "ระดับชั้น",
+                title: "วิชา",
                 callback: () async {
                   dynamic result = await Navigator.of(context).push(
                     PageRouteBuilder(
                       opaque: false,
-                      barrierColor: Colors.black54,
+                      barrierColor: Colors.black12,
                       pageBuilder: (_, __, ___) => FilterPop(
-                        title: "เลือกตัวเลือก",
+                        title: "วิชา",
                         filters: filteredSubjects,
                         models: allSubjects,
+                      ),
+                      transitionsBuilder: (ctx, anim1, anim2, child) =>
+                          BackdropFilter(
+                        filter: ImageFilter.blur(
+                            sigmaX: 2 * anim1.value, sigmaY: 2 * anim1.value),
+                        child: FadeTransition(
+                          child: child,
+                          opacity: anim1,
+                        ),
                       ),
                     ),
                   );
@@ -95,9 +111,18 @@ class _HomeViewState extends State<HomeView> {
                       opaque: false,
                       barrierColor: Colors.black54,
                       pageBuilder: (_, __, ___) => FilterPop(
-                        title: "เลือกตัวเลือก",
+                        title: "สถานที่",
                         filters: filterLocations,
                         models: allLocations,
+                      ),
+                      transitionsBuilder: (ctx, anim1, anim2, child) =>
+                          BackdropFilter(
+                        filter: ImageFilter.blur(
+                            sigmaX: 2 * anim1.value, sigmaY: 2 * anim1.value),
+                        child: FadeTransition(
+                          child: child,
+                          opacity: anim1,
+                        ),
                       ),
                     ),
                   );
@@ -192,6 +217,7 @@ class _HomeViewState extends State<HomeView> {
                       requestID: model.id,
                       roomID: roomID,
                       partner: student,
+                      location: "",
                     ),
                   ),
                 );

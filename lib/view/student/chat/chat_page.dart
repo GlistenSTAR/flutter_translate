@@ -8,9 +8,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:tutor/model/MessageModel.dart';
+import 'package:tutor/model/TutorCardModel.dart';
 import 'package:tutor/model/user.dart';
 import 'package:tutor/utils/const.dart';
 import 'package:tutor/utils/globals.dart';
@@ -18,19 +20,23 @@ import 'package:tutor/utils/util.dart';
 import 'package:tutor/view/student/chat/full_screen.dart';
 import 'package:tutor/view/student/chat/invoice_page.dart';
 import 'package:tutor/view/student/chat/receipt_page.dart';
+import 'package:tutor/view/student/search/tutor_time.dart';
+import 'package:tutor/view/tutor/schedule/schedule_view.dart';
 
 class ChatPage extends StatefulWidget {
-  ChatPage(
-      {Key? key,
-      required this.requestID,
-      required this.roomID,
-      required this.partner,
-      this.begintText})
-      : super(key: key);
+  ChatPage({
+    Key? key,
+    required this.requestID,
+    required this.roomID,
+    required this.partner,
+    required this.location,
+    this.begintText,
+  }) : super(key: key);
 
   final String requestID;
   final String roomID;
   final User partner;
+  final String location;
   final String? begintText;
 
   @override
@@ -46,6 +52,8 @@ class _ChatPageState extends State<ChatPage> {
 
   late User partner;
   late StreamSubscription transactionSubscription;
+
+  late TutorCardModel tutorCardModel;
 
   final List<String> wordGroups = [
     "email",
@@ -406,7 +414,10 @@ class _ChatPageState extends State<ChatPage> {
   Widget _buildInputWidget() {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.only(bottom: 8),
+      height: 80,
+      padding: EdgeInsets.only(
+        bottom: 8,
+      ),
       child: Row(
         children: <Widget>[
           //Book Button
@@ -495,7 +506,8 @@ class _ChatPageState extends State<ChatPage> {
                           "student_id": partner.uid,
                           "tutor_id": Globals.currentUser!.uid,
                           "type": 2,
-                          "transaction_id": transactionID
+                          "transaction_id": transactionID,
+                          "location": widget.location,
                         };
                         result.addAll(additional);
                         await showDialog(
@@ -521,7 +533,17 @@ class _ChatPageState extends State<ChatPage> {
               child: InkWell(
                 onTap: () async {
                   //Student re-booking
-                  print("Student re booking");
+                  print("Student are booking");
+                  dynamic profile = await Util.getTutorProfile(partner.uid);
+                  if (profile is TutorCardModel) {
+                    TutorCardModel model = profile;
+                    dynamic result = await Navigator.of(context).push(
+                      PageRouteBuilder(
+                          opaque: false,
+                          barrierColor: Colors.black54,
+                          pageBuilder: (_, __, ___) => TutorTime(model: model)),
+                    );
+                  }
                 },
                 child: Image.asset("images/common/rebook.png"),
               ),
@@ -529,39 +551,62 @@ class _ChatPageState extends State<ChatPage> {
           // Edit text
           Flexible(
             child: Container(
-              padding: EdgeInsets.only(left: 8),
+              padding: EdgeInsets.only(left: 16),
+              margin: EdgeInsets.only(left: 10, right: 10),
+              height: 50,
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 0),
+                      color: Colors.grey.shade300,
+                      spreadRadius: 1,
+                      blurRadius: 2)
+                ],
+              ),
               child: TextField(
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0,
                     fontWeight: FontWeight.w500),
+                textAlignVertical: TextAlignVertical.center,
                 controller: teController,
-                decoration: InputDecoration.collapsed(
-                  hintText: 'Enter message',
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+//                  hintText: 'ใส่ข้อความ',
+                  hintText: 'Enter Message',
                   hintStyle: TextStyle(color: Colors.grey),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      onSendMessage(teController.text.trim(), "");
+                    },
+                    icon: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 10,
+                        child: Icon(
+                          Icons.send,
+                          size: 24,
+                          color: COLOR.YELLOW,
+                        )),
+                  ),
                 ),
               ),
             ),
           ),
-
-          // Button send message
-          Material(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 8.0),
-              child: IconButton(
-                icon: Icon(Icons.send),
-                onPressed: () => onSendMessage(teController.text.trim(), ""),
-                color: COLOR.YELLOW,
-              ),
-            ),
-            color: Colors.white,
-          ),
+          // // Button send message
+          // Material(
+          //   child: Container(
+          //     margin: EdgeInsets.symmetric(horizontal: 8.0),
+          //     child: IconButton(
+          //       icon: Icon(Icons.send),
+          //       onPressed: () => onSendMessage(teController.text.trim(), ""),
+          //       color: COLOR.YELLOW,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
-      height: 60,
-      decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Colors.grey, width: 0.5)),
-          color: Colors.white),
     );
   }
 
@@ -619,9 +664,17 @@ class _ChatPageState extends State<ChatPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.transparent, width: 0),
+              borderRadius: BorderRadius.circular(24),
+            ),
+            insetPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             title: Text(
               "รายงานผู้ใช้งาน ${partner.nickname}",
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w900,
+              ),
             ),
             content: TextField(
               controller: teReport,
@@ -640,9 +693,16 @@ class _ChatPageState extends State<ChatPage> {
                   "รายงาน",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                style: ElevatedButton.styleFrom(
-                  primary: COLOR.YELLOW,
-                ),
+                style: ButtonStyle(
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(COLOR.YELLOW),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side:
+                                BorderSide(color: COLOR.YELLOW, width: 2.0)))),
               )
             ],
           );

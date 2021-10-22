@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           child: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset("images/common/logo.png"),
+            Image.asset("images/common/logo.png", width: 118, height: 118),
             SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -62,18 +62,21 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        backgroundColor: COLOR.TEXT_BORDER,
-                        radius: 40,
-                        foregroundImage: AssetImage("images/common/student.png"),
+                        backgroundColor: Colors.white,
+                        radius: 43,
+                        foregroundImage:
+                            AssetImage("images/common/student.png"),
                         // child: Image.asset("images/common/student.png"),
                       ),
                       SizedBox(height: 8),
                       Text(
                         "นักเรียน",
                         style: TextStyle(
+                          fontFamily: 'Prompt',
                           fontWeight: FontWeight.w900,
                           color: isTutor ? Colors.white : COLOR.YELLOW,
                           fontSize: 20,
+                          letterSpacing: 1,
                         ),
                       ),
                     ],
@@ -89,8 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       CircleAvatar(
-                        backgroundColor: COLOR.TEXT_BORDER,
-                        radius: 40,
+                        backgroundColor: Colors.white,
+                        radius: 43,
                         foregroundImage: AssetImage("images/common/tutor.png"),
                         // child: Image.asset("images/common/tutor.png"),
                       ),
@@ -98,9 +101,11 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         "ติวเตอร์",
                         style: TextStyle(
+                          fontFamily: 'Prompt',
                           fontWeight: FontWeight.w900,
                           color: isTutor ? COLOR.YELLOW : Colors.white,
                           fontSize: 20,
+                          letterSpacing: 1,
                         ),
                       ),
                     ],
@@ -153,9 +158,11 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       "เข้าใช้งาน",
                       style: TextStyle(
+                        fontFamily: 'Prompt',
                         color: COLOR.YELLOW,
                         fontWeight: FontWeight.w900,
                         fontSize: 20,
+                        letterSpacing: 1,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -178,7 +185,8 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: 20,
                     fontWeight: FontWeight.w900,
                     color: Colors.white,
-                    fontFamily: GoogleFonts.prompt().fontFamily,
+                    fontFamily: 'Prompt',
+                    letterSpacing: 1,
                   ),
                   children: [
                     TextSpan(

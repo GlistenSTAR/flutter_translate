@@ -35,7 +35,7 @@ class ChatView extends StatelessWidget {
                       DateTime.parse(data['timeStamp'].toDate().toString());
                   DateFormat formatter = DateFormat("dd/MM/yy");
                   String date = formatter.format(dateTime);
-                  formatter = DateFormat("hh:mm a");
+                  formatter = DateFormat("HH:mm");
                   String time = formatter.format(dateTime);
                   data["datetime"] = dateTime;
                   data["date"] = date;
@@ -75,6 +75,7 @@ class ChatView extends StatelessWidget {
                                 requestID: "",
                                 roomID: model.id,
                                 partner: student,
+                                location: "",
                               ),
                             ),
                           );

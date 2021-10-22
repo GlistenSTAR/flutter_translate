@@ -24,93 +24,120 @@ class THomeCard extends StatelessWidget {
     return InkWell(
       onTap: callback,
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        borderOnForeground: true,
+        shape: new OutlineInputBorder(
+            borderRadius: BorderRadius.circular(32),
+            borderSide: BorderSide(color: Colors.white)),
         child: Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          model.name,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      if (isNewRequest)
-                        Text(
-                          " NEW",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.red,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    "วันที่รีเควส",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ]),
-              SizedBox(height: 8),
-              Row(
-                children: [
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+            boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 0),
+                  color: Colors.grey,
+                  spreadRadius: 1,
+                  blurRadius: 3)
+            ],
+          ),
+          child: Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+              boxShadow: [
+                BoxShadow(
+                    offset: Offset(0, 0),
+                    color: Colors.white,
+                    spreadRadius: 1,
+                    blurRadius: 1)
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(children: [
                   Expanded(
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      textBaseline: TextBaseline.alphabetic,
                       children: [
-                        Text("ระดับชั้น: ${Util.gradeTH(model.level)}"),
-                        Text("วิชา: ${topicModel.longNameTH}"),
-                        Row(
-                          children: [
-                            Text(
-                                "วันที่เริ่มเรียน: ${formatedDateString(model.startDate)}"),
-                            Spacer(),
-                            Text(Util.formatedStringFrom(model.requestDate)),
-                            Spacer(),
-                          ],
+                        Flexible(
+                          child: Text(
+                            model.name,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                        Text("เรทต่อชั่วโมง: ${model.rate}"),
-                        Text("สถานที่: ${model.locationTH}"),
+                        if (isNewRequest)
+                          Text(
+                            " NEW",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.red,
+                            ),
+                          ),
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: COLOR.LIGHT_GREY,
-                    ),
+                  SizedBox(width: 8),
+                  Expanded(
                     child: Text(
-                      isBooked ? "จองแล้ว" : "ว่าง",
+                      "วันที่รีเควส",
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: isBooked
-                            ? Colors.black
-                            : Color.fromRGBO(119, 175, 135, 1),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  )
-                ],
-              ),
-            ],
+                  ),
+                ]),
+                SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("ระดับชั้น: ${Util.gradeTH(model.level)}"),
+                          Text("วิชา: ${topicModel.longNameTH}"),
+                          Row(
+                            children: [
+                              Text(
+                                  "วันที่เริ่มเรียน: ${formatedDateString(model.startDate)}"),
+                              Spacer(),
+                              Text(Util.formatedStringFrom(model.requestDate)),
+                              Spacer(),
+                            ],
+                          ),
+                          Text("เรทต่อชั่วโมง: ${model.rate}"),
+                          Text("สถานที่: ${model.locationTH}"),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: isBooked
+                            ? Colors.grey.shade300
+                            : Colors.green.shade50,
+                      ),
+                      child: Text(
+                        isBooked ? "จองแล้ว" : "ว่าง",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: isBooked
+                              ? Colors.black
+                              : Color.fromRGBO(119, 175, 135, 1),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -127,5 +154,5 @@ class THomeCard extends StatelessWidget {
       print(e);
       return "";
     }
-  }  
+  }
 }

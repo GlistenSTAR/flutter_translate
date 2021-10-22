@@ -136,7 +136,7 @@ class _ProfileViewState extends State<ProfileView> {
               },
               child: Text(
                 "แก้ไขรูป",
-                style: TextStyle(color: COLOR.YELLOW),
+                style: TextStyle(color: COLOR.YELLOW, fontSize: 18),
               ),
             ),
             Align(
@@ -145,7 +145,7 @@ class _ProfileViewState extends State<ProfileView> {
                 "ข้อมูลส่วนตัว",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: COLOR.DARK_GREY,
                 ),
               ),
@@ -163,12 +163,12 @@ class _ProfileViewState extends State<ProfileView> {
                 children: [
                   Text(
                     tutor["nickname"],
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                   ),
                   Divider(),
                   Text(
                     tutor["name"], //"ชื่อ"
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                   ),
                   Divider(),
                   ProfileCell(
@@ -205,7 +205,7 @@ class _ProfileViewState extends State<ProfileView> {
                 "MY CLASS", //Study
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: COLOR.DARK_GREY,
                 ),
               ),
@@ -248,7 +248,7 @@ class _ProfileViewState extends State<ProfileView> {
                 "ข้อมูลทางการสอน",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: COLOR.DARK_GREY,
                 ),
               ),
@@ -407,7 +407,7 @@ class _ProfileViewState extends State<ProfileView> {
                 "ข้อมูลการติดต่อ",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: COLOR.DARK_GREY,
                 ),
               ),
@@ -425,17 +425,17 @@ class _ProfileViewState extends State<ProfileView> {
                 children: [
                   Text(
                     tutor["email"] ?? "",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                   ),
                   Divider(),
                   Text(
                     tutor["tel"] ?? "",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                   ),
                   Divider(),
                   Text(
                     tutor["line_id"] ?? "",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                   ),
                   Divider(),
                   ProfileCell(
@@ -466,7 +466,7 @@ class _ProfileViewState extends State<ProfileView> {
                 "อื่นๆ",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: COLOR.DARK_GREY,
                 ),
               ),
@@ -556,7 +556,7 @@ class _ProfileViewState extends State<ProfileView> {
                     },
                     child: Text(
                       "ลงชื่อออก",
-                      style: TextStyle(fontSize: 16, color: COLOR.YELLOW),
+                      style: TextStyle(fontSize: 18, color: COLOR.YELLOW),
                     ),
                   ),
                 ],

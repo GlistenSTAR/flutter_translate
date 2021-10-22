@@ -33,9 +33,11 @@ class HomeView extends StatelessWidget {
             child: Text(
               "วิชายอดฮิต",
               style: TextStyle(
-                fontWeight: FontWeight.w700,
+                fontFamily: 'Prompt',
+                fontWeight: FontWeight.w900,
                 fontSize: 24,
                 color: COLOR.BLUE,
+                letterSpacing: 1,
               ),
             ),
           ),
@@ -45,9 +47,11 @@ class HomeView extends StatelessWidget {
             child: Text(
               "ติวสอบยอดฮิต",
               style: TextStyle(
-                fontWeight: FontWeight.w700,
+                fontFamily: 'Prompt',
+                fontWeight: FontWeight.w900,
                 fontSize: 24,
                 color: COLOR.BLUE,
+                letterSpacing: 1,
               ),
             ),
           ),
@@ -60,9 +64,11 @@ class HomeView extends StatelessWidget {
                 Text(
                   "วิชา",
                   style: TextStyle(
-                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Prompt',
+                    fontWeight: FontWeight.w900,
                     fontSize: 24,
                     color: COLOR.BLUE,
+                    letterSpacing: 1,
                   ),
                 ),
                 InkWell(
@@ -73,11 +79,12 @@ class HomeView extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                         text: "ทั้งหมด ",
-                        style: GoogleFonts.prompt(
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: COLOR.YELLOW,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'Prompt',
+                          fontWeight: FontWeight.w900,
+                          color: COLOR.YELLOW,
+                          fontSize: 18,
+                          letterSpacing: 0.5,
                         ),
                         children: [
                           WidgetSpan(
@@ -85,7 +92,7 @@ class HomeView extends StatelessWidget {
                             child: Icon(
                               Icons.arrow_forward_ios,
                               color: COLOR.YELLOW,
-                              size: 14,
+                              size: 18,
                             ),
                           ),
                         ]),
@@ -101,7 +108,6 @@ class HomeView extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 itemBuilder: (context, index) {
                   TopicModel topicModel = subjects[index];
-
                   return HomeTopic(
                       topicModel: topicModel,
                       callback: () {
@@ -124,9 +130,11 @@ class HomeView extends StatelessWidget {
                 Text(
                   "ติวสอบ",
                   style: TextStyle(
-                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Prompt',
+                    fontWeight: FontWeight.w900,
                     fontSize: 24,
                     color: COLOR.BLUE,
+                    letterSpacing: 1,
                   ),
                 ),
                 InkWell(
@@ -137,11 +145,12 @@ class HomeView extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                         text: "ทั้งหมด ",
-                        style: GoogleFonts.prompt(
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: COLOR.YELLOW,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'Prompt',
+                          fontWeight: FontWeight.w900,
+                          color: COLOR.YELLOW,
+                          fontSize: 18,
+                          letterSpacing: 0.5,
                         ),
                         children: [
                           WidgetSpan(
@@ -149,7 +158,7 @@ class HomeView extends StatelessWidget {
                             child: Icon(
                               Icons.arrow_forward_ios,
                               color: COLOR.YELLOW,
-                              size: 14,
+                              size: 18,
                             ),
                           ),
                         ]),
@@ -198,8 +207,9 @@ class HomeView extends StatelessWidget {
               child: Text(
                 "รีเควสของฉัน",
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 22,
+                  letterSpacing: 1,
                 ),
               ),
               style: ElevatedButton.styleFrom(

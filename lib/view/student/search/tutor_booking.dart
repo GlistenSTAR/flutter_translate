@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:time_picker_widget/time_picker_widget.dart';
+import 'package:tutor/model/FilterModel.dart';
 import 'package:tutor/model/TutorCardModel.dart';
 import 'package:tutor/utils/const.dart';
 import 'package:tutor/utils/util.dart';
+import 'package:tutor/widget/choose_location.dart';
+import 'package:tutor/widget/select_location.dart';
 
 class TutorBooking extends StatefulWidget {
-  TutorBooking({Key? key, required this.model, required this.date}) : super(key: key);
+  TutorBooking({Key? key, required this.model, required this.date})
+      : super(key: key);
 
-final TutorCardModel model;
+  final TutorCardModel model;
   final DateTime date;
 
   @override
@@ -19,8 +23,10 @@ class _TutorBookingState extends State<TutorBooking> {
   final teTitle = TextEditingController();
   final teLocation = TextEditingController();
   final teRate = TextEditingController();
-
   late TimeOfDay start, end;
+
+  late List<FilterModel> allLocations;
+  late FilterModel selectLocation;
 
   @override
   void initState() {
@@ -28,6 +34,10 @@ class _TutorBookingState extends State<TutorBooking> {
 
     start = TimeOfDay(hour: widget.date.hour, minute: 0);
     end = TimeOfDay(hour: widget.date.hour + 1, minute: 0);
+
+    allLocations = FilterModel.getLocationMapping();
+    selectLocation =
+        FilterModel(order: 0, nameID: "", nameTH: "", checked: false);
   }
 
   @override
@@ -41,7 +51,7 @@ class _TutorBookingState extends State<TutorBooking> {
             borderRadius: BorderRadius.circular(16),
           ),
           margin: EdgeInsets.all(16),
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(42),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -49,17 +59,25 @@ class _TutorBookingState extends State<TutorBooking> {
                   alignment: Alignment.centerRight,
                   child: InkWell(
                     onTap: () => Navigator.of(context).pop(),
-                    child: Icon(Icons.cancel_outlined),
+                    child: Icon(
+                      Icons.cancel_outlined,
+                      size: 40,
+                    ),
                   ),
                 ),
-                Text(
-                  widget.model.nickname,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    widget.model.nickname,
+                    style: TextStyle(
+                      fontFamily: 'Prompt',
+                      color: COLOR.BLUE,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
                   ),
                 ),
-                Divider(),
+                Divider(thickness: 1),
                 SizedBox(height: 8),
                 _detailRow("เวลาเริ่มเรียน", start.format(context),
                     callback: () {
@@ -86,7 +104,7 @@ class _TutorBookingState extends State<TutorBooking> {
                   );
                 }),
                 SizedBox(height: 8),
-                Divider(),
+                Divider(thickness: 1),
                 SizedBox(height: 8),
                 _detailRow("เวลาเรียนเสร็จ", end.format(context), callback: () {
                   showCustomTimePicker(
@@ -104,21 +122,21 @@ class _TutorBookingState extends State<TutorBooking> {
                     (time) {
                       if (time != null) {
                         setState(() {
-                          end = time;                          
+                          end = time;
                         });
                       }
                     },
                   );
                 }),
                 SizedBox(height: 8),
-                Divider(),
+                Divider(thickness: 1),
                 SizedBox(height: 8),
                 _detailRow(
                   "วันที่เรียน",
                   Util.getBuddhistDate(widget.date),
                 ),
                 SizedBox(height: 8),
-                Divider(),
+                Divider(thickness: 1),
                 TextField(
                   controller: teTitle,
                   decoration: InputDecoration(
@@ -128,7 +146,7 @@ class _TutorBookingState extends State<TutorBooking> {
                     fontSize: 18,
                   ),
                 ),
-                Divider(),                
+                Divider(thickness: 1),
                 TextField(
                   controller: teRate,
                   decoration: InputDecoration(
@@ -141,18 +159,44 @@ class _TutorBookingState extends State<TutorBooking> {
                     fontSize: 18,
                   ),
                 ),
-                TextField(
-                  controller: teLocation,
-                  decoration: InputDecoration(
-                      border: InputBorder.none, hintText: "สถานที่เรียน"),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                  ),
+                Divider(thickness: 1),
+                // TextField(
+                //   controller: teLocation,
+                //   decoration: InputDecoration(
+                //       border: InputBorder.none, hintText: "สถานที่เรียน"),
+                //   style: TextStyle(
+                //     fontWeight: FontWeight.w500,
+                //     fontSize: 18,
+                //   ),
+                // ),
+                ChooseLocation(
+                  title: "สถานที่เรียน",
+                  placeholder: "สถานที่เรียน",
+                  selected: selectLocation,
+                  callback: () async {
+                    dynamic result = await Navigator.of(context).push(
+                      PageRouteBuilder(
+                        opaque: false,
+                        barrierColor: Colors.black54,
+                        pageBuilder: (_, __, ___) => SelectLocation(
+                          title: "สถานที่เรียน",
+                          location: selectLocation,
+                          models: allLocations,
+                        ),
+                      ),
+                    );
+
+                    if (result != null && result is FilterModel) {
+                      setState(() {
+                        selectLocation = result;
+                      });
+                    }
+                  },
                 ),
-                Divider(),
+                SizedBox(height: 8),
                 Container(
                   width: MediaQuery.of(context).size.width,
+                  height: 50,
                   child: ElevatedButton(
                     onPressed: () {
                       String title = teTitle.text.trim();
@@ -179,7 +223,7 @@ class _TutorBookingState extends State<TutorBooking> {
                         "amount": amount,
                         "class_title": title,
                         "class_date":
-                            DateFormat("yyyy-MM-dd").format(widget.date),
+                            DateFormat("dd/MM/yy").format(widget.date),
                         "class_beginTime":
                             DateFormat.Hm("en").format(getDateFromTime(start)),
                         "class_endTime":
@@ -191,7 +235,8 @@ class _TutorBookingState extends State<TutorBooking> {
                             "-" +
                             DateFormat.Hm("en").format(getDateFromTime(end)),
                         "class_status": "pending",
-                        "class_location": location,
+                        "status_changed": true,
+                        "class_location": selectLocation.nameID,
                       };
 
                       Navigator.of(context).pop(data);

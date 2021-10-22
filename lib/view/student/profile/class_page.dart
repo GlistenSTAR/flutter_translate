@@ -28,23 +28,22 @@ class ClassPage extends StatelessWidget {
         future: getClassInfo(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<ClassModel> models =
-                snapshot.data as List<ClassModel>;
+            List<ClassModel> models = snapshot.data as List<ClassModel>;
             return ListView.separated(
                 padding: EdgeInsets.all(16),
                 itemBuilder: (context, index) {
                   ClassModel model = models[index];
                   return ClassCard(
-                    model: model,
-                    callback: () {
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (context) {
-                          return ClassDetail(model: model);
-                        },
-                      ),
-                    );
-                  });
+                      model: model,
+                      callback: () {
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder: (context) {
+                              return ClassDetail(model: model);
+                            },
+                          ),
+                        );
+                      });
                 },
                 separatorBuilder: (_, __) => SizedBox(height: 8),
                 itemCount: models.length);
@@ -104,7 +103,8 @@ class ClassPage extends StatelessWidget {
         break;
     }
     data["status"] = status;
-
+    data["location"] = Util.locationTH(data["location"] ?? "");
+    data["status_changed"] = data["status_changed"] ?? false;
     return ClassModel.fromJson(data);
   }
 }

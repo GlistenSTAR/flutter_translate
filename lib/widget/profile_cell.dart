@@ -21,13 +21,13 @@ class ProfileCell extends StatelessWidget {
             title,
             style: TextStyle(
               color: titleColor ?? COLOR.YELLOW,
-              fontSize: 16,
+              fontSize: 18,
             ),
           ),
           Icon(
             Icons.arrow_forward_ios,
             color: COLOR.DARK_GREY,
-            size: 16,
+            size: 18,
           ),
         ],
       ),

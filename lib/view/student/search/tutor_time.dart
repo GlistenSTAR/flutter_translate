@@ -338,7 +338,10 @@ class _TutorTimeState extends State<TutorTime> {
               ),
               IconButton(
                 onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(Icons.cancel_outlined),
+                icon: Icon(
+                  Icons.cancel_outlined,
+                  size: 40,
+                ),
               ),
             ],
           ),
@@ -554,6 +557,7 @@ class _TutorTimeState extends State<TutorTime> {
             roomID: roomID,
             partner: tutor,
             begintText: beginText,
+            location: result['class_location'],
           ),
         ),
       );

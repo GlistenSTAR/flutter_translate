@@ -109,6 +109,34 @@ class Util {
     }
   }
 
+  static String locationID(String th) {
+    if (th.isEmpty) {
+      return "";
+    }
+
+    try {
+      FilterModel filterModel = FilterModel.getLocationMapping()
+          .firstWhere((element) => element.nameTH == th);
+      return filterModel.nameID;
+    } catch (e) {
+      return "";
+    }
+  }
+
+  static String locationTH(String id) {
+    if (id.isEmpty) {
+      return "";
+    }
+
+    try {
+      FilterModel filterModel = FilterModel.getLocationMapping()
+          .firstWhere((element) => element.nameID == id);
+      return filterModel.nameTH;
+    } catch (e) {
+      return "";
+    }
+  }
+
   static Future<dynamic> login(String email, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -590,7 +618,7 @@ class Util {
       }
 
       // each levels
-      for (var level in (value as List<String>)) {
+      for (var level in (value as List<dynamic>)) {
         batch.set(colRef1.doc(level).collection("all_locations").doc(uid), data,
             SetOptions(merge: true));
 
@@ -640,7 +668,7 @@ class Util {
       }
 
       // each levels
-      for (var level in (value as List<String>)) {
+      for (var level in (value as List<dynamic>)) {
         batch.delete(colRef1.doc(level).collection("all_locations").doc(uid));
 
         for (var location in locations) {
@@ -656,7 +684,7 @@ class Util {
 
   static Future<void> addTutorToTestingPool(
     String uid,
-    List<String> testings,
+    List<dynamic> testings,
     List<String> locations,
   ) async {
     Map<String, dynamic> data = {"lastUpdated": "2021-04-19"};
@@ -682,7 +710,7 @@ class Util {
 
   static Future<void> deleteTutorFromTestingPool(
     String uid,
-    List<String> testings,
+    List<dynamic> testings,
     List<String> locations,
   ) async {
     var batch = FirebaseFirestore.instance.batch();

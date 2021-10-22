@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -91,7 +92,19 @@ class _TutorPoolState extends State<TutorPool> {
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 32),
+
+        //#####
+        // decoration: BoxDecoration(
+        //   shape: BoxShape.rectangle,
+        //   boxShadow: [
+        //     BoxShadow(
+        //         offset: Offset(0, 0),
+        //         color: Colors.grey,
+        //         spreadRadius: 1,
+        //         blurRadius: 2)
+        //   ],
+        // ),
         child: Column(
           children: [
             Container(
@@ -140,6 +153,17 @@ class _TutorPoolState extends State<TutorPool> {
                                   filters: filteredLevels,
                                   models: allLevels,
                                 ),
+                                transitionsBuilder:
+                                    (ctx, anim1, anim2, child) =>
+                                        BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                      sigmaX: 2 * anim1.value,
+                                      sigmaY: 2 * anim1.value),
+                                  child: FadeTransition(
+                                    child: child,
+                                    opacity: anim1,
+                                  ),
+                                ),
                               ),
                             );
 
@@ -168,6 +192,16 @@ class _TutorPoolState extends State<TutorPool> {
                             title: "สถานที่",
                             filters: filterLocations,
                             models: allLocations,
+                          ),
+                          transitionsBuilder: (ctx, anim1, anim2, child) =>
+                              BackdropFilter(
+                            filter: ImageFilter.blur(
+                                sigmaX: 2 * anim1.value,
+                                sigmaY: 2 * anim1.value),
+                            child: FadeTransition(
+                              child: child,
+                              opacity: anim1,
+                            ),
                           ),
                         ),
                       );

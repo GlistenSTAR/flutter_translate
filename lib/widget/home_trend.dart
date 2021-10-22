@@ -26,7 +26,8 @@ class HomeTrend extends StatelessWidget {
               image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
             ),
           ),
-          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+          placeholder: (context, url) =>
+              Center(child: CircularProgressIndicator()),
           errorWidget: (context, url, error) => ClipOval(
             child: Image.asset(
               "images/common/logo.png",

@@ -1,3 +1,6 @@
+import 'package:intl/intl.dart';
+import 'package:tutor/utils/util.dart';
+
 class ClassModel {
   String id;
   String title;
@@ -14,6 +17,8 @@ class ClassModel {
   String date;
   String endTime;
   String time;
+  String location;
+  bool statusChanged;
   DateTime? begin;
   DateTime? end;
   Map<String, dynamic>? previous;
@@ -34,6 +39,8 @@ class ClassModel {
     required this.date,
     required this.endTime,
     required this.time,
+    required this.location,
+    required this.statusChanged,
     this.begin,
     this.end,
     this.previous,
@@ -54,8 +61,14 @@ class ClassModel {
       status: map['status'] ?? "",
       beginTime: map['class_beginTime'] ?? "",
       date: map['class_date'] ?? "",
+      // date: DateFormat("dd/MM/yyyy")
+      //     .format(Util.toBuddhist(
+      //         DateFormat("yyyy-MM-dd").parse(map['class_date'].toString())))
+      //     .toString(),
       endTime: map['class_endTime'] ?? "",
       time: map['class_time'] ?? "",
+      location: map['location'] ?? "",
+      statusChanged: map['status_changed'] ?? true,
       previous: map['previous'],
     );
   }

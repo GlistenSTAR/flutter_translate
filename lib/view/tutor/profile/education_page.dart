@@ -197,7 +197,7 @@ class _EducationPageState extends State<EducationPage> {
     String degree = teDegree.text.trim();
     String study = teStudy.text.trim();
     String rate = teRate.text.trim();
-    
+
     Map<String, dynamic> display = {
       "school": school,
       "degree": degree,

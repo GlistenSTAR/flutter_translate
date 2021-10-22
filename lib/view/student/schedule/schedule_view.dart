@@ -278,7 +278,7 @@ class _ScheduleViewState extends State<ScheduleView> {
               ),
               IconButton(
                 onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(Icons.cancel_outlined),
+                icon: Icon(Icons.cancel_outlined, size: 40),
               ),
             ],
           ),
@@ -349,7 +349,7 @@ class _ScheduleViewState extends State<ScheduleView> {
   }
 
   String getNewDetail(ClassModel model) {
-    DateFormat formatter = DateFormat("yyyy-MM-dd");
+    DateFormat formatter = DateFormat("dd/MM/yyyy");
     String str = model.title +
         "\n" +
         model.tutorNickname +
@@ -362,7 +362,7 @@ class _ScheduleViewState extends State<ScheduleView> {
   }
 
   String getPrevDetail(ClassModel model) {
-    DateFormat formatter = DateFormat("yyyy-MM-dd");
+    DateFormat formatter = DateFormat("dd/MM/yyyy");
     DateTime prev = formatter.parse(model.previous!["class_date"]);
     String str = model.title +
         "\n" +
@@ -390,7 +390,7 @@ class _ScheduleViewState extends State<ScheduleView> {
         .collection("ClassIDs")
         .where("student_id", isEqualTo: Globals.currentUser!.uid)
         .where("class_date",
-            isEqualTo: DateFormat("yyyy-MM-dd").format(_currentDate))
+            isEqualTo: DateFormat("dd/MM/yyyy").format(_currentDate))
         .orderBy("class_beginTime")
         .get();
 

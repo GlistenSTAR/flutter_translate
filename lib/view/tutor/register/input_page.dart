@@ -5,11 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tutor/model/StringsModel.dart';
 import 'package:tutor/utils/const.dart';
 import 'package:tutor/utils/util.dart';
 import 'package:tutor/view/student/profile/privacy_policy.dart';
 import 'package:tutor/view/student/profile/terms_condition.dart';
+import 'package:tutor/widget/choose_string.dart';
 import 'package:tutor/widget/profile_cell.dart';
+import 'package:tutor/widget/select_string.dart';
 
 class InputPage extends StatefulWidget {
   InputPage({Key? key}) : super(key: key);
@@ -31,23 +34,7 @@ class _InputPageState extends State<InputPage> {
   final teBankNumber = TextEditingController();
   final teBankName = TextEditingController();
   final teIDCard = TextEditingController();
-
-  String year = "";
-
-  List<String> years = [
-    "น้อยกว่า 1",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "มากกว่า 10"
-  ];
+  late StringsModel selectedString = StringsModel(stringID: "", stringTH: "");
 
   bool _isBankImage = true;
   File? _bankImage, _cardImage;
@@ -115,14 +102,15 @@ class _InputPageState extends State<InputPage> {
             Text(
               "ข้อมูลการศึกษา", //Education
               style: TextStyle(
-                fontSize: 20,
+                fontFamily: 'Prompt',
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(top: 8, bottom: 16),
+              margin: EdgeInsets.only(top: 8, bottom: 18),
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -132,7 +120,7 @@ class _InputPageState extends State<InputPage> {
                 children: [
                   TextField(
                     controller: teSchool,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: COLOR.DARK_GREY),
@@ -142,7 +130,7 @@ class _InputPageState extends State<InputPage> {
                   Divider(height: 2),
                   TextField(
                     controller: teDegree,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: COLOR.DARK_GREY),
@@ -152,7 +140,7 @@ class _InputPageState extends State<InputPage> {
                   Divider(height: 2),
                   TextField(
                     controller: teStudy,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: COLOR.DARK_GREY),
@@ -162,7 +150,7 @@ class _InputPageState extends State<InputPage> {
                   Divider(height: 2),
                   TextField(
                     controller: teRate,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: COLOR.DARK_GREY),
@@ -172,24 +160,48 @@ class _InputPageState extends State<InputPage> {
                         TextInputType.numberWithOptions(decimal: true),
                   ),
                   Divider(height: 2),
-                  TextField(
-                    controller: teYear,
-                    style: TextStyle(fontSize: 16),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(color: COLOR.DARK_GREY),
-                      hintText: "ประสบการณ์การสอน (ปี) *ระบุเฉพาะตัวเลข*",
-                    ),
-                    readOnly: true,
-                    onTap: () => showYearSheet(context),
+                  ChooseString(
+                    placeholder: "ประสบการณ์การสอน (ปี)",
+                    selected: selectedString,
+                    callback: () async {
+                      dynamic result = await Navigator.of(context).push(
+                        PageRouteBuilder(
+                          opaque: false,
+                          barrierColor: Colors.black54,
+                          pageBuilder: (_, __, ___) => SelectString(
+                            title: "เลือก",
+                            selected: selectedString,
+                            models: StringsModel.getYears(),
+                          ),
+                        ),
+                      );
+
+                      if (result != null && result is StringsModel) {
+                        setState(() {
+                          selectedString = result;
+                        });
+                      }
+                    },
                   ),
+                  // TextField(
+                  //   controller: teYear,
+                  //   style: TextStyle(fontSize: 16),
+                  //   decoration: InputDecoration(
+                  //     border: InputBorder.none,
+                  //     hintStyle: TextStyle(color: COLOR.DARK_GREY),
+                  //     hintText: "ประสบการณ์การสอน (ปี)",
+                  //   ),
+                  //   readOnly: true,
+                  //   onTap: () => showYearSheet(context),
+                  // ),
                 ],
               ),
             ),
             Text(
-              "ข้อมูลการศึกษา", //Financial
+              "ข้อมูลทางการเงิน", //Financial
               style: TextStyle(
-                fontSize: 20,
+                fontFamily: 'Prompt',
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -207,7 +219,7 @@ class _InputPageState extends State<InputPage> {
                 children: [
                   TextField(
                     controller: teBankNumber,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: COLOR.DARK_GREY),
@@ -217,7 +229,7 @@ class _InputPageState extends State<InputPage> {
                   Divider(height: 2),
                   TextField(
                     controller: teBankName,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: COLOR.DARK_GREY),
@@ -238,7 +250,8 @@ class _InputPageState extends State<InputPage> {
                       child: Text(
                         "อัพโหลดสำเนาสมุดธนาคาร",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontFamily: 'Prompt',
+                          fontSize: 18,
                           color: COLOR.YELLOW,
                           fontWeight: FontWeight.bold,
                         ),
@@ -251,7 +264,7 @@ class _InputPageState extends State<InputPage> {
                     child: Text(
                       "สำเนาสมุดธนาคาร (เซ็นสำเนาถูกต้อง)",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         color: COLOR.DARK_GREY,
                       ),
                     ),
@@ -270,7 +283,7 @@ class _InputPageState extends State<InputPage> {
                   Divider(height: 2),
                   TextField(
                     controller: teIDCard,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: COLOR.DARK_GREY),
@@ -291,7 +304,8 @@ class _InputPageState extends State<InputPage> {
                       child: Text(
                         "อัพโหลดสำเนาบัตรประชาชน",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontFamily: 'Prompt',
+                          fontSize: 18,
                           color: COLOR.YELLOW,
                           fontWeight: FontWeight.bold,
                         ),
@@ -304,7 +318,7 @@ class _InputPageState extends State<InputPage> {
                     child: Text(
                       "สำเนาบัตรประชาชน (เซ็นสำเนาถูกต้อง)",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         color: COLOR.DARK_GREY,
                       ),
                     ),
@@ -326,7 +340,8 @@ class _InputPageState extends State<InputPage> {
             Text(
               "ข้อตกลง", //Agreement
               style: TextStyle(
-                fontSize: 20,
+                fontFamily: 'Prompt',
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -360,7 +375,7 @@ class _InputPageState extends State<InputPage> {
                       children: [
                         Text(
                           "ยอมรับ นโยบายความเป็นส่วนตัว",
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 18),
                         ),
                         CupertinoSwitch(
                             value: _isPrivacy,
@@ -390,7 +405,7 @@ class _InputPageState extends State<InputPage> {
                       children: [
                         Text(
                           "ยอมรับ เงื่อนไขการใช้งาน",
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 18),
                         ),
                         CupertinoSwitch(
                             value: _isTerm,
@@ -410,7 +425,11 @@ class _InputPageState extends State<InputPage> {
               },
               child: Text(
                 "บันทึกข้อมูล",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontFamily: 'Prompt',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -427,32 +446,6 @@ class _InputPageState extends State<InputPage> {
     );
   }
 
-  void showYearSheet(BuildContext context) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (context) => CupertinoActionSheet(
-        title: Text("เลือก"),
-        actions: years
-            .map<CupertinoActionSheetAction>((e) => CupertinoActionSheetAction(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    year = e;
-                    teYear.text = year + " ปี";
-                  },
-                  child: Text(e + " ปี"),
-                ))
-            .toList(),
-        cancelButton: CupertinoActionSheetAction(
-          child: const Text('ปิด'),
-          isDefaultAction: true,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-    );
-  }
-
   void setTutorProfile() async {
     FocusScope.of(context).unfocus();
 
@@ -460,10 +453,11 @@ class _InputPageState extends State<InputPage> {
     String degree = teDegree.text.trim();
     String study = teStudy.text.trim();
     String rate = teRate.text.trim();
-    
+
     String bankNumber = teBankNumber.text.trim();
     String bankName = teBankName.text.trim();
     String idCard = teIDCard.text.trim();
+    String year = selectedString.stringTH;
 
     if (school.isEmpty ||
         degree.isEmpty ||

@@ -68,13 +68,13 @@ class _MainStudentState extends State<MainStudent> {
             child: Container(
               margin: EdgeInsets.only(right: 8.0),
               child: Stack(
-                alignment: Alignment.topRight,
+                alignment: Alignment.centerRight,
                 children: [
                   Image.asset("images/ring_circle.png"),
                   StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection("StudentIDs")
-                        .doc(Globals.currentUser!.uid)
+                        .doc('ChJ0j3SR0dWyxqOIwWLmDr6zYv93')
                         .collection("GeneralNotifications")
                         .where("is_readed", isEqualTo: false)
                         .snapshots(),
@@ -173,7 +173,8 @@ class _MainStudentState extends State<MainStudent> {
       title: title,
       activeColorPrimary: COLOR.YELLOW,
       inactiveColorPrimary: COLOR.DARK,
-      textStyle: GoogleFonts.prompt(
+      textStyle: TextStyle(
+        fontFamily: 'Prompt',
         color: COLOR.BLUE,
         fontSize: 9,
       ),
