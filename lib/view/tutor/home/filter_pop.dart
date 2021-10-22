@@ -55,6 +55,7 @@ class _FilterPopState extends State<FilterPop> {
                 Text(
                   widget.title,
                   style: TextStyle(
+                    fontFamily: 'Prompt',
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -67,6 +68,7 @@ class _FilterPopState extends State<FilterPop> {
                   child: Text(
                     "เลือก",
                     style: TextStyle(
+                      fontFamily: 'Prompt',
                       color: COLOR.YELLOW,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -106,7 +108,7 @@ class _FilterPopState extends State<FilterPop> {
                                 }
                               });
                             }),
-                      );                      
+                      );
                     },
                     separatorBuilder: (_, __) => SizedBox(height: 8),
                     itemCount: models.length,

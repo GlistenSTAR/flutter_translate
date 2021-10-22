@@ -19,8 +19,16 @@ class HomeTopic extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 1.0,
               child: Container(
+                margin: EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 0),
+                        color: Colors.grey,
+                        spreadRadius: 1,
+                        blurRadius: 2)
+                  ],
                   image: DecorationImage(
                       image: AssetImage(topicModel.topic == "subject"
                           ? "images/subject/${topicModel.iconName}.png"
@@ -34,7 +42,10 @@ class HomeTopic extends StatelessWidget {
           SizedBox(height: 8),
           Text(
             topicModel.titleTH,
-            style: TextStyle(fontWeight: FontWeight.w700),
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+            ),
           )
         ],
       ),

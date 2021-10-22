@@ -37,6 +37,7 @@ class _MainTutorState extends State<MainTutor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         leading: Container(
@@ -56,7 +57,7 @@ class _MainTutorState extends State<MainTutor> {
             child: Container(
               margin: EdgeInsets.only(right: 8.0),
               child: Stack(
-                alignment: Alignment.topRight,
+                alignment: Alignment.centerRight,
                 children: [
                   Image.asset("images/ring_circle.png"),
                   StreamBuilder<QuerySnapshot>(
@@ -92,7 +93,7 @@ class _MainTutorState extends State<MainTutor> {
         screens: _screens,
         items: [
           _getBottomMenuItem("หน้าหลัก", Icons.format_list_bulleted_outlined),
-          _getBottomMenuItem("ค้นหา", Icons.chat_outlined),
+          _getBottomMenuItem("พูดคุย", Icons.chat_outlined),
           _getBottomMenuItem("ตารางสอน", Icons.today_outlined),
           _getBottomMenuItem("โปรไฟล์", Icons.person_outline),
         ],
@@ -131,11 +132,13 @@ class _MainTutorState extends State<MainTutor> {
       //     _getBottomMenuItem("ตารางสอน", "images/tab/calendar.png"),
       //     _getBottomMenuItem("โปรไฟล์", "images/tab/user.png"),
       //   ],
-      //   selectedLabelStyle: GoogleFonts.prompt(
+      //   selectedLabelStyle: TextStyle(
+      //     fontFamily: 'Prompt',
       //     color: COLOR.BLUE,
       //     fontSize: 9,
       //   ),
-      //   unselectedLabelStyle: GoogleFonts.prompt(
+      //   unselectedLabelStyle: TextStyle(
+      //     fontFamily: 'Prompt',
       //     color: COLOR.DARK,
       //     fontSize: 8,
       //   ),
@@ -158,7 +161,8 @@ class _MainTutorState extends State<MainTutor> {
       title: title,
       activeColorPrimary: COLOR.YELLOW,
       inactiveColorPrimary: COLOR.DARK,
-      textStyle: GoogleFonts.prompt(
+      textStyle: TextStyle(
+        fontFamily: 'Prompt',
         color: COLOR.BLUE,
         fontSize: 9,
       ),

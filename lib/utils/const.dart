@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 mixin COLOR {
   static const Color BLUE = Color(0xFF0072C2);
+  static const Color BLACK = Color(0xFF000000);
   static const Color DARK = Color(0xFF7E807E);
   static const Color LIGHT_GREY = Color(0xFFF1F1F1);
   static const Color DARK_GREY = Color(0xFF7F7F7F);

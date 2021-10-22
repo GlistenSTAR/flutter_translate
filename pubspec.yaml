@@ -76,11 +76,17 @@ flutter:
     - images/tutor/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-  
-    - google_fonts/
 
     - assets/terms.json
     - assets/policy.json
+  fonts:
+    - family: Prompt
+      fonts: 
+        - asset: assets/fonts/Prompt/Prompt-Regular.ttf
+        - asset: assets/fonts/Prompt/Prompt-bold.ttf
+          weight: 700
+        - asset: assets/fonts/Prompt/Prompt-Italic.ttf
+          style: italic
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

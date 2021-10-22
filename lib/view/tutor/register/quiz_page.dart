@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tutor/model/QuizModel.dart';
 import 'package:tutor/utils/const.dart';
 import 'package:tutor/utils/util.dart';
@@ -148,6 +149,9 @@ class QuizPage extends StatelessWidget {
                   "testDate": Util.getBuddhistDate(DateTime.now()),
                 };
 
+                // #####
+                point = 10;
+
                 if (point > 7) {
                   data["testPass"] = true;
                   await userRef.set(data, SetOptions(merge: true));
@@ -194,13 +198,17 @@ class QuizPage extends StatelessWidget {
         title: Text(
           title,
           style: TextStyle(
+            fontFamily: 'Prompt',
             fontWeight: FontWeight.w700,
-            fontSize: 13,
+            fontSize: 20,
           ),
         ),
         content: Text(
           description,
-          style: TextStyle(fontSize: 11),
+          style: TextStyle(
+            fontFamily: 'Prompt',
+            fontSize: 18,
+          ),
         ),
         actions: [
           CupertinoDialogAction(

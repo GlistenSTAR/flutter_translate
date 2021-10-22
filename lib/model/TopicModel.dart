@@ -311,14 +311,14 @@ class TopicModel {
           topic: "testing",
           ord: 0,
           titleID: "9vi_math1",
-          titleTH: "คณิต1 1",
+          titleTH: "คณิต1",
           longNameTH: "9 วิชา (คณิต1)",
           iconName: "icon-testing-9vi"),
       TopicModel(
           topic: "testing",
           ord: 1,
           titleID: "9vi_math2",
-          titleTH: "คณิต1 2",
+          titleTH: "คณิต2",
           longNameTH: "9 วิชา (คณิต2)",
           iconName: "icon-testing-9vi"),
       TopicModel(

@@ -31,221 +31,224 @@ class _ReceiptPageState extends State<ReceiptPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(height: MediaQuery.of(context).size.height * .1),
+      body: Column(
+        children: [
+          Flexible(
+            child: InkWell(
+              onTap: () => Navigator.of(context).pop(),
             ),
-            Container(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * .9,
-              ),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(32),
-                  )),
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Icon(Icons.cancel_outlined),
-                    ),
-                  ),
-                  Text(
-                    "ใบยืนยันคลาสเรียน",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Divider(),
-                  TextField(
-                    controller: teTitle,
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: "วิชา/ติวสอบ*"),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Divider(),
-                  SizedBox(height: 8),
-                  _detailRow("วันที่เรียน", Util.getBuddhistDate(_selectedDate),
-                      callback: () async {
-                    dynamic result = await Navigator.of(context).push(
-                      PageRouteBuilder(
-                        opaque: false,
-                        barrierColor: Colors.black54,
-                        pageBuilder: (_, __, ___) => CalendarPage(),
-                      ),
-                    );
-
-                    if (result != null && result is DateTime) {
-                      setState(() {
-                        _selectedDate = result;
-                      });
-                    }
-                  }),
-                  SizedBox(height: 8),
-                  Divider(),
-                  SizedBox(height: 8),
-                  _detailRow("เวลาเริ่มเรียน", start.format(context),
-                      callback: () {
-                    showCustomTimePicker(
-                        context: context,
-                        // It is a must if you provide selectableTimePredicate
-                        onFailValidation: (context) =>
-                            showToast('Unavailable selection'),
-                        initialTime:
-                            TimeOfDay(hour: start.hour, minute: start.minute),
-                        selectableTimePredicate: (time) =>
-                            time!.hour >= 8 &&
-                            time.hour <= 22 &&
-                            time.minute % 5 == 0).then(
-                      (time) {
-                        if (time != null) {
-                          setState(() {
-                            start = time;
-                            end = TimeOfDay(
-                                hour: start.hour + 1, minute: start.minute);
-                            teHour.text = "1 Hour";
-                          });
-                        }
-                      },
-                    );
-                  }),
-                  SizedBox(height: 8),
-                  Divider(),
-                  SizedBox(height: 8),
-                  _detailRow("เวลาเรียนเสร็จ", end.format(context),
-                      callback: () {
-                    showCustomTimePicker(
-                        context: context,
-                        // It is a must if you provide selectableTimePredicate
-                        onFailValidation: (context) =>
-                            showToast('Unavailable selection'),
-                        initialTime: TimeOfDay(
-                            hour: start.hour + 1, minute: start.minute),
-                        selectableTimePredicate: (time) =>
-                            time!.hour > start.hour &&
-                            time.hour <= 23 &&
-                            getDurationMinutes(start, time) >= 60 &&
-                            time.minute % 5 == 0).then(
-                      (time) {
-                        if (time != null) {
-                          setState(() {
-                            end = time;
-                            int minutes = getDurationMinutes(start, end);
-                            int min = minutes % 60;
-                            if (min == 0) {
-                              teHour.text = "${minutes ~/ 60} hours";
-                            } else {
-                              teHour.text =
-                                  "${minutes ~/ 60} hours $min minutes";
-                            }
-                          });
-                        }
-                      },
-                    );
-                  }),
-                  SizedBox(height: 8),
-                  Divider(),
-                  TextField(
-                    controller: teHour,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: "จำนวนชม./ครั้ง*"),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Divider(),
-                  TextField(
-                    controller: teRate,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "ค่าเรียนต่อชั่วโมง(บาท)*",
-                    ),
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        String title = teTitle.text.trim();                       
-                        String rateString = teRate.text.trim();
-                        int minutes = getDurationMinutes(start, end);
-                        String hours = (minutes / 60).toStringAsFixed(2);
-
-                        if (title.isEmpty || rateString.isEmpty) {
-                          showToast("กรุณากรอกข้อมูลให้ครบ");
-                          return;
-                        }
-
-                        double? rate = double.tryParse(rateString);
-                        if (rate == null) {
-                          showToast("Invalid number");
-                          return;
-                        }
-
-                        double amount =
-                            rate * getDurationMinutes(start, end) / 60;
-
-                        Map<String, dynamic> data = {
-                          "amount": amount,
-                          "class_title": title,
-                          "class_date":
-                              DateFormat("yyyy-MM-dd").format(_selectedDate),
-                          "class_beginTime": DateFormat.Hm("en")
-                              .format(getDateFromTime(start)),
-                          "class_endTime":
-                              DateFormat.Hm("en").format(getDateFromTime(end)),
-                          "class_hour": hours,
-                          "class_price_hour": rateString,
-                          "class_time": DateFormat.Hm("en")
-                                  .format(getDateFromTime(start)) +
-                              "-" +
-                              DateFormat.Hm("en").format(getDateFromTime(end)),
-                          "class_status": "pending",
-                        };
-
-                        Navigator.of(context).pop(data);
-                      },
-                      child: Text(
-                        "ส่งใบยืนยันคลาสเรียน",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: COLOR.YELLOW,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32)),
-                      ),
-                    ),
-                  )
-                ],
+          ),
+          Container(
+            height: 585,
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * .7,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
               ),
             ),
-          ],
-        ),
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: InkWell(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: Icon(
+                      Icons.cancel_outlined,
+                      size: 40,
+                    ),
+                  ),
+                ),
+                Text(
+                  "ใบยืนยันคลาสเรียน",
+                  style: TextStyle(
+                    fontFamily: 'Prompt',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Divider(),
+                TextField(
+                  controller: teTitle,
+                  decoration: InputDecoration(
+                      border: InputBorder.none, hintText: "วิชา/ติวสอบ*"),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
+                ),
+                Divider(),
+                SizedBox(height: 8),
+                _detailRow("วันที่เรียน", Util.getBuddhistDate(_selectedDate),
+                    callback: () async {
+                  dynamic result = await Navigator.of(context).push(
+                    PageRouteBuilder(
+                      opaque: false,
+                      barrierColor: Colors.black54,
+                      pageBuilder: (_, __, ___) => CalendarPage(),
+                    ),
+                  );
+
+                  if (result != null && result is DateTime) {
+                    setState(() {
+                      _selectedDate = result;
+                    });
+                  }
+                }),
+                SizedBox(height: 8),
+                Divider(),
+                SizedBox(height: 8),
+                _detailRow("เวลาเริ่มเรียน", start.format(context),
+                    callback: () {
+                  showCustomTimePicker(
+                      context: context,
+                      // It is a must if you provide selectableTimePredicate
+                      onFailValidation: (context) =>
+                          showToast('Unavailable selection'),
+                      initialTime:
+                          TimeOfDay(hour: start.hour, minute: start.minute),
+                      selectableTimePredicate: (time) =>
+                          time!.hour >= 8 &&
+                          time.hour <= 22 &&
+                          time.minute % 5 == 0).then(
+                    (time) {
+                      if (time != null) {
+                        setState(() {
+                          start = time;
+                          end = TimeOfDay(
+                              hour: start.hour + 1, minute: start.minute);
+                          teHour.text = "1 Hour";
+                        });
+                      }
+                    },
+                  );
+                }),
+                SizedBox(height: 8),
+                Divider(),
+                SizedBox(height: 8),
+                _detailRow("เวลาเรียนเสร็จ", end.format(context), callback: () {
+                  showCustomTimePicker(
+                      context: context,
+                      // It is a must if you provide selectableTimePredicate
+                      onFailValidation: (context) =>
+                          showToast('Unavailable selection'),
+                      initialTime:
+                          TimeOfDay(hour: start.hour + 1, minute: start.minute),
+                      selectableTimePredicate: (time) =>
+                          time!.hour > start.hour &&
+                          time.hour <= 23 &&
+                          getDurationMinutes(start, time) >= 60 &&
+                          time.minute % 5 == 0).then(
+                    (time) {
+                      if (time != null) {
+                        setState(() {
+                          end = time;
+                          int minutes = getDurationMinutes(start, end);
+                          int min = minutes % 60;
+                          if (min == 0) {
+                            teHour.text = "${minutes ~/ 60} hours";
+                          } else {
+                            teHour.text = "${minutes ~/ 60} hours $min minutes";
+                          }
+                        });
+                      }
+                    },
+                  );
+                }),
+                SizedBox(height: 8),
+                Divider(),
+                TextField(
+                  controller: teHour,
+                  readOnly: true,
+                  decoration: InputDecoration(
+                      border: InputBorder.none, hintText: "จำนวนชม./ครั้ง*"),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
+                ),
+                Divider(),
+                TextField(
+                  controller: teRate,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "ค่าเรียนต่อชั่วโมง(บาท)*",
+                  ),
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      String title = teTitle.text.trim();
+                      String rateString = teRate.text.trim();
+                      int minutes = getDurationMinutes(start, end);
+                      String hours = (minutes / 60).toStringAsFixed(2);
+
+                      if (title.isEmpty || rateString.isEmpty) {
+                        showToast("กรุณากรอกข้อมูลให้ครบ");
+                        return;
+                      }
+
+                      double? rate = double.tryParse(rateString);
+                      if (rate == null) {
+                        showToast("Invalid number");
+                        return;
+                      }
+
+                      double amount =
+                          rate * getDurationMinutes(start, end) / 60;
+
+                      Map<String, dynamic> data = {
+                        "amount": amount,
+                        "class_title": title,
+                        "class_date":
+                            DateFormat("dd/MM/yyyy").format(_selectedDate),
+                        "class_beginTime":
+                            DateFormat.Hm("en").format(getDateFromTime(start)),
+                        "class_endTime":
+                            DateFormat.Hm("en").format(getDateFromTime(end)),
+                        "class_hour": hours,
+                        "class_price_hour": rateString,
+                        "class_time": DateFormat.Hm("en")
+                                .format(getDateFromTime(start)) +
+                            "-" +
+                            DateFormat.Hm("en").format(getDateFromTime(end)),
+                        "class_status": "pending",
+                        "status_changed": true,
+                      };
+
+                      Navigator.of(context).pop(data);
+                    },
+                    child: Text(
+                      "ส่งใบยืนยันคลาสเรียน",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: COLOR.YELLOW,
+                      padding: EdgeInsets.only(top: 8, bottom: 8),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32)),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

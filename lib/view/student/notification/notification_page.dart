@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tutor/model/NotificationModel.dart';
 import 'package:tutor/utils/globals.dart';
@@ -98,11 +99,19 @@ class _NotificationPageState extends State<NotificationPage> {
 
                                     return NotificationCell(
                                       notification: notification,
-                                      callback: () {},
+                                      callback: () {
+                                        // Navigator.of(context).push(
+                                        //   CupertinoPageRoute(
+                                        //     builder: (context) => ReviewPage(),
+                                        //   ),
+                                        // );
+                                      },
                                     );
                                   },
                                   separatorBuilder: (_, __) => Divider(),
-                                  itemCount: 10);
+                                  itemCount: notifications.length > 10
+                                      ? 10
+                                      : notifications.length);
                             }
                           } else if (snapshot.hasError) {
                             return Center(child: Text("Connection Error"));

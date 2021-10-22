@@ -38,7 +38,7 @@ class _CalendarPageState extends State<CalendarPage> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(top: 0, bottom: 20, left: 20, right: 20),
               constraints: BoxConstraints(maxHeight: 450),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -46,18 +46,27 @@ class _CalendarPageState extends State<CalendarPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "ปฎิทิน",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 26,
-                          color: COLOR.BLUE,
+                      Container(
+                        padding: EdgeInsets.only(top: 30, bottom: 10),
+                        child: Text(
+                          "ปฎิทิน",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 26,
+                            color: COLOR.BLUE,
+                          ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () =>
-                            Navigator.of(context).pop(_selectedDate),
-                        icon: Icon(Icons.cancel_outlined),
+                      Container(
+                        padding: EdgeInsets.only(top: 10, bottom: 20),
+                        child: IconButton(
+                          onPressed: () =>
+                              Navigator.of(context).pop(_selectedDate),
+                          icon: Icon(
+                            Icons.cancel_outlined,
+                            size: 40,
+                          ),
+                        ),
                       ),
                     ],
                   ),

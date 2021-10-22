@@ -37,6 +37,9 @@ class _ClassDetailState extends State<ClassDetail> {
         .doc(Globals.currentUser!.uid)
         .collection("Classes")
         .doc(model.id);
+
+    Map<String, dynamic> data = {"status_changed": false};
+    Util.updateClass(model.id, data);
   }
 
   @override
@@ -82,7 +85,7 @@ class _ClassDetailState extends State<ClassDetail> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "ยืนยันการสอน",
+                            "ยืนยันการเรียน",
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -103,7 +106,7 @@ class _ClassDetailState extends State<ClassDetail> {
                                     );
                                   },
                                   child: Text(
-                                    "ยังไม่ได้สอน",
+                                    "ไม่ได้เรียน",
                                     style: TextStyle(
                                       fontSize: 18,
                                     ),
@@ -132,7 +135,7 @@ class _ClassDetailState extends State<ClassDetail> {
                                     showReminderDialog(context);
                                   },
                                   child: Text(
-                                    "สอนแล้ว",
+                                    "เรียนแล้ว",
                                     style: TextStyle(
                                       fontSize: 18,
                                     ),
@@ -165,7 +168,7 @@ class _ClassDetailState extends State<ClassDetail> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "ส่งใบคำร้องโอนเงิน",
+                              "ขอใบเสร็จรับเงิน",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -249,7 +252,7 @@ class _ClassDetailState extends State<ClassDetail> {
                 fontWeight: FontWeight.w700,
                 fontSize: 18,
                 color: Colors.black,
-                fontFamily: GoogleFonts.prompt().fontFamily,
+                fontFamily: 'Prompt',
               ),
               children: [
                 TextSpan(
@@ -328,14 +331,12 @@ class _ClassDetailState extends State<ClassDetail> {
       );
 
       if (downloadUrl == "ERROR_UPLOAD_IMAGE") {
-        showToast("Upload Failed");        
+        showToast("Upload Failed");
       } else {
         setState(() {
           invoiceLink = downloadUrl;
         });
       }
-
-      
     } else {
       print("Not received Invoice image");
     }

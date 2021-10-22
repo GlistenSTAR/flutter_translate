@@ -142,7 +142,7 @@ class _ProfileViewState extends State<ProfileView> {
                 "ข้อมูลส่วนตัว",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: COLOR.DARK_GREY,
                 ),
               ),
@@ -200,7 +200,7 @@ class _ProfileViewState extends State<ProfileView> {
                 "การเรียน", //Study
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: COLOR.DARK_GREY,
                 ),
               ),
@@ -263,7 +263,7 @@ class _ProfileViewState extends State<ProfileView> {
                 "ข้อมูลการติดต่อ",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: COLOR.DARK_GREY,
                 ),
               ),
@@ -318,13 +318,14 @@ class _ProfileViewState extends State<ProfileView> {
               ),
             ),
             SizedBox(height: 16),
+            // Other
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "อื่นๆ",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: COLOR.DARK_GREY,
                 ),
               ),
@@ -392,7 +393,7 @@ class _ProfileViewState extends State<ProfileView> {
                     },
                     child: Text(
                       "ลงชื่อออก",
-                      style: TextStyle(fontSize: 16, color: COLOR.YELLOW),
+                      style: TextStyle(fontSize: 18, color: COLOR.YELLOW),
                     ),
                   ),
                 ],

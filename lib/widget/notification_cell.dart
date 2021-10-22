@@ -16,39 +16,52 @@ class NotificationCell extends StatelessWidget {
       onTap: callback,
       child: Row(
         children: [
-          notification.imageUrl.isEmpty
-              ? Image.asset(
-                  "images/common/logo.png",
-                  fit: BoxFit.cover,
-                  width: 60,
-                  height: 60,
-                )
-              : Container(
-                  width: 60,
-                  height: 60,
-                  child: CachedNetworkImage(
-                    imageUrl: notification.imageUrl,
-                    imageBuilder: (context, imageProvider) => Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.cover),
-                      ),
-                    ),
-                    placeholder: (context, url) =>
-                        Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => ClipOval(
-                      child: Image.asset(
-                        "images/common/logo.png",
-                        fit: BoxFit.cover,
+          Container(
+            margin: EdgeInsets.only(top: 8, bottom: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+              boxShadow: [
+                BoxShadow(
+                    offset: Offset(0, 0),
+                    color: Colors.grey.shade300,
+                    spreadRadius: 1,
+                    blurRadius: 1)
+              ],
+            ),
+            child: notification.imageUrl.isEmpty
+                ? Image.asset(
+                    "images/common/logo.png",
+                    fit: BoxFit.cover,
+                    width: 60,
+                    height: 60,
+                  )
+                : Container(
+                    width: 60,
+                    height: 60,
+                    child: CachedNetworkImage(
+                      imageUrl: notification.imageUrl,
+                      imageBuilder: (context, imageProvider) => Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.cover),
+                        ),
+                      ),
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => ClipOval(
+                        child: Image.asset(
+                          "images/common/logo.png",
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                        ),
                       ),
                     ),
                   ),
-                ),
+          ),
           SizedBox(width: 16),
           Expanded(
             child: Column(

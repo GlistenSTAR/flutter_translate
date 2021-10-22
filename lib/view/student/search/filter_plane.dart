@@ -40,14 +40,14 @@ class _FilterPlaneState extends State<FilterPlane> {
             ),
           ),
           Container(
+            height: models.length * 68,
             constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height * 0.6,
             ),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(16),
               ),
             ),
             padding: EdgeInsets.all(16),
@@ -102,7 +102,7 @@ class _FilterPlaneState extends State<FilterPlane> {
                                 }
                               });
                             }),
-                      );       
+                      );
                     },
                     separatorBuilder: (_, __) => SizedBox(height: 8),
                     itemCount: models.length,

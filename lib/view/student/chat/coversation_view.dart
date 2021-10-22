@@ -75,6 +75,7 @@ class ConversationView extends StatelessWidget {
                               requestID: "",
                               roomID: model.id,
                               partner: tutor,
+                              location: "",
                             ),
                           ),
                         );

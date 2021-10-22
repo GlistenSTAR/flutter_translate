@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
+import 'package:tutor/model/StringsModel.dart';
 import 'package:tutor/utils/const.dart';
 import 'package:tutor/utils/globals.dart';
 import 'package:tutor/utils/util.dart';
 import 'package:tutor/view/student/schedule/calendar_page.dart';
+import 'package:tutor/widget/choose_string.dart';
+import 'package:tutor/widget/select_string.dart';
 
 class PersonalInfo extends StatefulWidget {
   PersonalInfo({Key? key, required this.isTutor, required this.info})
@@ -27,6 +30,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
   late DateTime birthday;
 
+  late StringsModel selectedGender = StringsModel(stringID: "", stringTH: "");
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +42,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
     birthday = Util.getDateFromBuddhist(info["birthday"] ?? "");
     teGender.text = Util.genderTH(info["gender"] ?? "");
     teAddress.text = info["address"] ?? "";
+    selectedGender = StringsModel(
+        stringID: info["gender"] ?? "",
+        stringTH: Util.genderTH(info["gender"] ?? ""));
   }
 
   @override
@@ -60,6 +68,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             Text(
               "แก้ไขข้อมูลส่วนตัว",
               style: TextStyle(
+                fontFamily: 'Prompt',
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -76,7 +85,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 children: [
                   TextField(
                     controller: teNickname,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "ชื่อเล่น*",
@@ -86,7 +95,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   Divider(height: 2),
                   TextField(
                     controller: teName,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "ชื่อ*",
@@ -97,7 +106,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("วันเกิด"),
+                        Text("วันเกิด", style: TextStyle(fontSize: 18)),
                         ElevatedButton(
                           onPressed: () async {
                             //Need to show date picker
@@ -125,21 +134,44 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         ),
                       ]),
                   Divider(height: 2),
-                  TextField(
-                    controller: teGender,
-                    readOnly: true,
-                    onTap: () => showGenderSheet(context),
-                    style: TextStyle(fontSize: 16),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "เพศ",
-                      hintStyle: TextStyle(color: COLOR.DARK_GREY),
-                    ),
+                  // TextField(
+                  //   controller: teGender,
+                  //   readOnly: true,
+                  //   onTap: () => showGenderSheet(context),
+                  //   style: TextStyle(fontSize: 18),
+                  //   decoration: InputDecoration(
+                  //     border: InputBorder.none,
+                  //     hintText: "เพศ",
+                  //     hintStyle: TextStyle(color: COLOR.DARK_GREY),
+                  //   ),
+                  // ),
+                  ChooseString(
+                    placeholder: "เพศ",
+                    selected: selectedGender,
+                    callback: () async {
+                      dynamic result = await Navigator.of(context).push(
+                        PageRouteBuilder(
+                          opaque: false,
+                          barrierColor: Colors.black54,
+                          pageBuilder: (_, __, ___) => SelectString(
+                            title: "เลือกเพศ",
+                            selected: selectedGender,
+                            models: StringsModel.getGenders(),
+                          ),
+                        ),
+                      );
+
+                      if (result != null && result is StringsModel) {
+                        setState(() {
+                          selectedGender = result;
+                        });
+                      }
+                    },
                   ),
                   Divider(height: 2),
                   TextField(
                     controller: teAddress,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "ที่อยู่",
@@ -155,7 +187,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       "บันทึกข้อมูล",
                       style: TextStyle(
                         color: COLOR.YELLOW,
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -210,7 +242,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
       ),
     );
   }
-  
+
   void updateInfo() async {
     String nickname = teNickname.text.trim();
     String name = teName.text.trim();
@@ -236,8 +268,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
     await showDialog(
       context: context,
       builder: (context) => FutureProgressDialog(
-        Util.updateInfo(widget.isTutor, Globals.currentUser!.uid,
-            display, personal),
+        Util.updateInfo(
+            widget.isTutor, Globals.currentUser!.uid, display, personal),
         message: Text('Please wait for a moment...'),
       ),
     );

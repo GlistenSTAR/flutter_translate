@@ -33,7 +33,8 @@ class _QuizSectionState extends State<QuizSection> {
         Text(
           quizModel.question,
           style: TextStyle(
-            fontSize: 18,
+            fontFamily: 'Prompt',
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -55,8 +56,8 @@ class _QuizSectionState extends State<QuizSection> {
                 child: Text(
                   option,
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
                   ),
                   textAlign: TextAlign.center,
                 ),

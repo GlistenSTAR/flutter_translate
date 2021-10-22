@@ -58,7 +58,10 @@ class _ChangeClassState extends State<ChangeClass> {
                   alignment: Alignment.centerRight,
                   child: InkWell(
                     onTap: () => Navigator.of(context).pop(),
-                    child: Icon(Icons.cancel_outlined),
+                    child: Icon(
+                      Icons.cancel_outlined,
+                      size: 40,
+                    ),
                   ),
                 ),
                 Text(

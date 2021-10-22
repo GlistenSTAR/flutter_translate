@@ -200,6 +200,19 @@ class _TeachSubjectState extends State<TeachSubject> {
     );
   }
 
+  static Future<void> updatefirbase(
+    String uid,
+    Map<String, dynamic> subjectLevels,
+    List<String> locations,
+    Map<String, dynamic> data,
+  ) {
+    Util.deleteTutorFromSubjectPool(
+        Globals.currentUser!.uid, subjectLevels, locations);
+    Util.addTutorToSubjectPool(
+        Globals.currentUser!.uid, subjectLevels, locations);
+    return Util.updateTeachSubject(Globals.currentUser!.uid, data);
+  }
+
   void updateInfo() async {
     List<String> levelList = levels.map<String>((e) => e.nameID).toList();
     Map<String, dynamic> subjectLevels = {};
@@ -209,34 +222,41 @@ class _TeachSubjectState extends State<TeachSubject> {
     }
 
     Map<String, dynamic> data = {"subject_levels": subjectLevels};
+    List<String> locations = widget.info["locations"].cast<String>();
 
     await showDialog(
       context: context,
       builder: (context) => FutureProgressDialog(
-        Util.deleteTutorFromSubjectPool(
-            Globals.currentUser!.uid,
-            widget.info["subject_levels"] ?? {},
-            widget.info["locations"] ?? []),
+        updatefirbase(Globals.currentUser!.uid, subjectLevels, locations, data),
         message: Text('Please wait for a moment...'),
       ),
     );
 
-    await showDialog(
-      context: context,
-      builder: (context) => FutureProgressDialog(
-        Util.addTutorToSubjectPool(
-            Globals.currentUser!.uid, subjectLevels, widget.info["locations"] ?? []),
-        message: Text('Please wait for a moment...'),
-      ),
-    );
+    // await showDialog(
+    //   context: context,
+    //   builder: (context) => FutureProgressDialog(
+    //     Util.deleteTutorFromSubjectPool(
+    //         Globals.currentUser!.uid, subjectLevels, locations),
+    //     message: Text('Please wait for a moment...'),
+    //   ),
+    // );
 
-    await showDialog(
-      context: context,
-      builder: (context) => FutureProgressDialog(
-        Util.updateTeachSubject(Globals.currentUser!.uid, data),
-        message: Text('Please wait for a moment...'),
-      ),
-    );
+    // await showDialog(
+    //   context: context,
+    //   builder: (context) => FutureProgressDialog(
+    //     Util.addTutorToSubjectPool(
+    //         Globals.currentUser!.uid, subjectLevels, locations),
+    //     message: Text('Please wait for a moment...'),
+    //   ),
+    // );
+
+    // await showDialog(
+    //   context: context,
+    //   builder: (context) => FutureProgressDialog(
+    //     Util.updateTeachSubject(Globals.currentUser!.uid, data),
+    //     message: Text('Please wait for a moment...'),
+    //   ),
+    // );
 
     Navigator.of(context).pop(data);
   }

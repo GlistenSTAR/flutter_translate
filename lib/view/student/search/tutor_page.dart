@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:tutor/model/TutorCardModel.dart';
 import 'package:tutor/utils/const.dart';
+import 'package:tutor/utils/util.dart';
 import 'package:tutor/view/student/search/tutor_time.dart';
 import 'package:tutor/view/tutor/schedule/schedule_view.dart';
 import 'package:tutor/widget/rating_percent.dart';
@@ -19,6 +20,7 @@ class TutorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         leading: IconButton(
@@ -76,7 +78,8 @@ class TutorPage extends StatelessWidget {
                             child: Text(
                               model.nickname,
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Prompt',
+                                fontWeight: FontWeight.w700,
                                 fontSize: 20,
                               ),
                             ),
@@ -85,8 +88,9 @@ class TutorPage extends StatelessWidget {
                           Text(
                             model.rate,
                             style: TextStyle(
+                              fontFamily: 'Prompt',
+                              fontWeight: FontWeight.w700,
                               color: COLOR.YELLOW,
-                              fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
                           ),
@@ -142,19 +146,20 @@ class TutorPage extends StatelessWidget {
               child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return TagItem(title: model.locations[index]);
+                    return TagItem(
+                        title: Util.locationTH(model.locations[index]));
                   },
                   separatorBuilder: (_, __) => SizedBox(width: 16),
                   itemCount: model.locations.length),
             ),
             SizedBox(height: 8),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                model.promo,
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.centerLeft,
+            //   child: Text(
+            //     model.promo,
+            //     style: TextStyle(fontSize: 16),
+            //   ),
+            // ),
             SizedBox(height: 8),
             Align(
               alignment: Alignment.centerLeft,
@@ -171,7 +176,7 @@ class TutorPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    "Additional teaching history",
+                    model.promo,
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
