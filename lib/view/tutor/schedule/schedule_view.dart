@@ -324,6 +324,8 @@ class _ScheduleViewState extends State<ScheduleView> {
                     fontWeight: FontWeight.w700,
                     fontSize: 21,
                     color: COLOR.BLUE,
+                    fontFamily: 'Prompt',
+                    letterSpacing: 0.12,
                   ),
                 ),
               ),
@@ -347,6 +349,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
+                          fontFamily: 'Prompt',
                         ),
                       ),
                       SizedBox(height: 8),

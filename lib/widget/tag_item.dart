@@ -13,11 +13,15 @@ class TagItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         color: COLOR.LIGHT_GREY,
       ),
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       alignment: Alignment.center,
       child: Text(
         title,
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          letterSpacing: 0.12,
+          fontFamily: 'Prompt',
+        ),
       ),
     );
   }

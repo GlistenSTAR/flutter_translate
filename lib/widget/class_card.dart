@@ -11,6 +11,7 @@ class ClassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dateArray = model.date.split("-");
     return InkWell(
       onTap: callback,
       child: Card(
@@ -30,6 +31,7 @@ class ClassCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Prompt',
                     ),
                   ),
                   Text(
@@ -49,7 +51,10 @@ class ClassCard extends StatelessWidget {
                 children: [
                   Text(
                     model.tutorNickname,
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Prompt',
+                    ),
                   ),
                   Text(
                     "สถานะ",
@@ -57,6 +62,7 @@ class ClassCard extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: COLOR.BLUE,
+                      fontFamily: 'Prompt',
                     ),
                   ),
                 ],
@@ -66,9 +72,12 @@ class ClassCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "วันที่: ${model.date}\nเวลา: ${model.time}\nสถานที่: ${model.location}",
+                    "วันที่: ${dateArray[2]}/${dateArray[1]}/${dateArray[0]}\nเวลา: ${model.time}\nสถานที่: ${model.location}",
 //                   "วันที่: ${model.date}\nเวลา: ${model.time}",
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontFamily: 'Prompt',
+                    ),
                   ),
                   Text(
                     model.status,
@@ -76,6 +85,7 @@ class ClassCard extends StatelessWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
                       color: COLOR.BLUE,
+                      fontFamily: 'Prompt',
                     ),
                   ),
                 ],

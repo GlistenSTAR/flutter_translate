@@ -23,7 +23,9 @@ class RadioRow extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Prompt',
               ),
             ),
           ),

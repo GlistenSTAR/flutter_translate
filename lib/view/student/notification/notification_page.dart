@@ -66,59 +66,63 @@ class _NotificationPageState extends State<NotificationPage> {
               ),
               SizedBox(height: 16),
               Expanded(
-                child:
-                    // Center(child: Text("ไม่มีการแจ้งเตือน", style: TextStyle(fontSize: 18),),),
-                    FutureBuilder<QuerySnapshot>(
-                        future: collectionRef.orderBy("time_sent").get(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<NotificationModel> notifications =
-                                snapshot.data!.docs.map<NotificationModel>((e) {
-                              Map<String, dynamic> data =
-                                  e.data() as Map<String, dynamic>;
-                              data["id"] = e.id;
-                              return NotificationModel.fromJson(data);
-                            }).toList();
+                child: Container(
+                  decoration: BoxDecoration(color: Colors.white),
+                  child:
+                      // Center(child: Text("ไม่มีการแจ้งเตือน", style: TextStyle(fontSize: 18),),),
+                      FutureBuilder<QuerySnapshot>(
+                          future: collectionRef.orderBy("time_sent").get(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              List<NotificationModel> notifications = snapshot
+                                  .data!.docs
+                                  .map<NotificationModel>((e) {
+                                Map<String, dynamic> data =
+                                    e.data() as Map<String, dynamic>;
+                                data["id"] = e.id;
+                                return NotificationModel.fromJson(data);
+                              }).toList();
 
-                            if (notifications.isEmpty) {
-                              return Center(
-                                child: Text(
-                                  "ไม่มีการแจ้งเตือน",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              );
+                              if (notifications.isEmpty) {
+                                return Center(
+                                  child: Text(
+                                    "ไม่มีการแจ้งเตือน",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                );
+                              } else {
+                                return ListView.separated(
+                                    itemBuilder: (context, index) {
+                                      NotificationModel notification =
+                                          notifications[index];
+
+                                      if (!notification.isReaded) {
+                                        markAsRead(notification.id);
+                                      }
+
+                                      return NotificationCell(
+                                        notification: notification,
+                                        callback: () {
+                                          // Navigator.of(context).push(
+                                          //   CupertinoPageRoute(
+                                          //     builder: (context) => ReviewPage(),
+                                          //   ),
+                                          // );
+                                        },
+                                      );
+                                    },
+                                    separatorBuilder: (_, __) => Divider(),
+                                    itemCount: notifications.length > 10
+                                        ? 10
+                                        : notifications.length);
+                              }
+                            } else if (snapshot.hasError) {
+                              return Center(child: Text("Connection Error"));
                             } else {
-                              return ListView.separated(
-                                  itemBuilder: (context, index) {
-                                    NotificationModel notification =
-                                        notifications[index];
-
-                                    if (!notification.isReaded) {
-                                      markAsRead(notification.id);
-                                    }
-
-                                    return NotificationCell(
-                                      notification: notification,
-                                      callback: () {
-                                        // Navigator.of(context).push(
-                                        //   CupertinoPageRoute(
-                                        //     builder: (context) => ReviewPage(),
-                                        //   ),
-                                        // );
-                                      },
-                                    );
-                                  },
-                                  separatorBuilder: (_, __) => Divider(),
-                                  itemCount: notifications.length > 10
-                                      ? 10
-                                      : notifications.length);
+                              return Center(child: CircularProgressIndicator());
                             }
-                          } else if (snapshot.hasError) {
-                            return Center(child: Text("Connection Error"));
-                          } else {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                        }),
+                          }),
+                ),
               ),
             ],
           ),

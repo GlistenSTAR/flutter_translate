@@ -35,7 +35,7 @@ class ConversationView extends StatelessWidget {
                       DateTime.parse(data['timeStamp'].toDate().toString());
                   DateFormat formatter = DateFormat("dd/MM/yy");
                   String date = formatter.format(dateTime);
-                  formatter = DateFormat("hh:mm a");
+                  formatter = DateFormat("hh:mm");
                   String time = formatter.format(dateTime);
                   data["datetime"] = dateTime;
                   data["date"] = date;

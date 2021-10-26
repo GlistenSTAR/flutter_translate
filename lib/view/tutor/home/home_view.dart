@@ -148,7 +148,9 @@ class _HomeViewState extends State<HomeView> {
                       for (var document in docs) {
                         Map<String, dynamic> data =
                             document.data() as Map<String, dynamic>;
-                        if (data["request_status"] == "expired") continue;
+                        print("------- $data");
+                        if (data["request_status"] == "expired" ||
+                            data["request_status"] == null) continue;
 
                         data["id"] = document.id;
                         RequestModel model = RequestModel.fromJson(data);

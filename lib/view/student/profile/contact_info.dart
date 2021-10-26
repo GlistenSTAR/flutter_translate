@@ -151,8 +151,7 @@ class _ContactInfoState extends State<ContactInfo> {
       await showDialog(
         context: context,
         builder: (context) => FutureProgressDialog(
-          Util.updateContact(
-              isTutor, Globals.currentUser!.uid, contact),
+          Util.updateContact(isTutor, Globals.currentUser!.uid, contact),
           message: Text('Please wait for a moment...'),
         ),
       );

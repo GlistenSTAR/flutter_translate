@@ -168,7 +168,7 @@ class ProfileCard extends StatelessWidget {
                                               model.nickname,
                                               style: TextStyle(
                                                 fontFamily: 'Prompt',
-                                                fontWeight: FontWeight.w900,
+                                                fontWeight: FontWeight.bold,
                                                 fontSize: 20,
                                               ),
                                             ),

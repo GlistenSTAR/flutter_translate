@@ -24,66 +24,69 @@ class ChatView extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                itemBuilder: (ctx, index) {
-                  QueryDocumentSnapshot document = snapshot.data!.docs[index];
-                  Map<String, dynamic> data =
-                      document.data() as Map<String, dynamic>;
-                  data["id"] = document.id;
-                  DateTime dateTime =
-                      DateTime.parse(data['timeStamp'].toDate().toString());
-                  DateFormat formatter = DateFormat("dd/MM/yy");
-                  String date = formatter.format(dateTime);
-                  formatter = DateFormat("HH:mm");
-                  String time = formatter.format(dateTime);
-                  data["datetime"] = dateTime;
-                  data["date"] = date;
-                  data["time"] = time;
-                  RecentChatModel model = RecentChatModel.fromJson(data);
+            return Container(
+              decoration: BoxDecoration(color: Colors.white),
+              child: ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  itemBuilder: (ctx, index) {
+                    QueryDocumentSnapshot document = snapshot.data!.docs[index];
+                    Map<String, dynamic> data =
+                        document.data() as Map<String, dynamic>;
+                    data["id"] = document.id;
+                    DateTime dateTime =
+                        DateTime.parse(data['timeStamp'].toDate().toString());
+                    DateFormat formatter = DateFormat("dd/MM/yy");
+                    String date = formatter.format(dateTime);
+                    formatter = DateFormat("HH:mm");
+                    String time = formatter.format(dateTime);
+                    data["datetime"] = dateTime;
+                    data["date"] = date;
+                    data["time"] = time;
+                    RecentChatModel model = RecentChatModel.fromJson(data);
 
-                  return ConversationCell(
-                      model: model,
-                      callback: () async {
-                        dynamic result = await showDialog(
-                          context: context,
-                          builder: (context) => FutureProgressDialog(
-                            Util.getStudent(model.userID),
-                            message: Text('Please wait for a moment...'),
-                          ),
-                        );
-
-                        if (result is Map) {
-                          User student = User(
-                            uid: model.userID,
-                            isTutor: false,
-                            name: result["name"] ?? "",
-                            nickname: result["nickname"] ?? "",
-                            profileUrl: result["display_img"] ?? "",
-                            address: result["address"] ?? "",
-                            idCard: result["id_card_filled"] ?? "",
-                            following: (result["following"] == null)
-                                ? []
-                                : (result["following"] as List)
-                                    .map<String>((e) => e.toString())
-                                    .toList(),
-                          );
-
-                          Navigator.of(context).push(
-                            CupertinoPageRoute(
-                              builder: (context) => ChatPage(
-                                requestID: "",
-                                roomID: model.id,
-                                partner: student,
-                                location: "",
-                              ),
+                    return ConversationCell(
+                        model: model,
+                        callback: () async {
+                          dynamic result = await showDialog(
+                            context: context,
+                            builder: (context) => FutureProgressDialog(
+                              Util.getStudent(model.userID),
+                              message: Text('Please wait for a moment...'),
                             ),
                           );
-                        }
-                      });
-                },
-                separatorBuilder: (_, __) => Divider(indent: 60),
-                itemCount: snapshot.data!.docs.length);
+
+                          if (result is Map) {
+                            User student = User(
+                              uid: model.userID,
+                              isTutor: false,
+                              name: result["name"] ?? "",
+                              nickname: result["nickname"] ?? "",
+                              profileUrl: result["display_img"] ?? "",
+                              address: result["address"] ?? "",
+                              idCard: result["id_card_filled"] ?? "",
+                              following: (result["following"] == null)
+                                  ? []
+                                  : (result["following"] as List)
+                                      .map<String>((e) => e.toString())
+                                      .toList(),
+                            );
+
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                builder: (context) => ChatPage(
+                                  requestID: "",
+                                  roomID: model.id,
+                                  partner: student,
+                                  location: "",
+                                ),
+                              ),
+                            );
+                          }
+                        });
+                  },
+                  separatorBuilder: (_, __) => Divider(indent: 60),
+                  itemCount: snapshot.data!.docs.length),
+            );
           } else if (snapshot.hasError) {
             return Center(child: Text("Connection Error"));
           } else {

@@ -40,7 +40,7 @@ class _FilterPlaneState extends State<FilterPlane> {
             ),
           ),
           Container(
-            height: models.length * 68,
+            height: models.length * 60,
             constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height * 0.6,
             ),
@@ -61,7 +61,8 @@ class _FilterPlaneState extends State<FilterPlane> {
                       widget.title,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 18,
+                        fontFamily: 'Prompt',
                       ),
                     ),
                     TextButton(
@@ -74,7 +75,8 @@ class _FilterPlaneState extends State<FilterPlane> {
                         style: TextStyle(
                           color: COLOR.YELLOW,
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 18,
+                          fontFamily: 'Prompt',
                         ),
                       ),
                     ),

@@ -29,6 +29,9 @@ class _ReceiptPageState extends State<ReceiptPage> {
 
   @override
   Widget build(BuildContext context) {
+    DateFormat formatter = DateFormat("dd/MM");
+    String sDate = formatter.format(_selectedDate);
+    String sYear = Util.getBuddhistCalendarYear(_selectedDate);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Column(
@@ -39,10 +42,6 @@ class _ReceiptPageState extends State<ReceiptPage> {
             ),
           ),
           Container(
-            height: 585,
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * .7,
-            ),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -50,7 +49,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                 topRight: Radius.circular(16),
               ),
             ),
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -69,23 +68,28 @@ class _ReceiptPageState extends State<ReceiptPage> {
                   style: TextStyle(
                     fontFamily: 'Prompt',
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 18,
+                    letterSpacing: 0.12,
                   ),
                 ),
                 Divider(),
                 TextField(
                   controller: teTitle,
                   decoration: InputDecoration(
-                      border: InputBorder.none, hintText: "วิชา/ติวสอบ*"),
+                    border: InputBorder.none,
+                    hintText: "วิชา/ติวสอบ*",
+                    contentPadding: EdgeInsets.all(0),
+                    isDense: true,
+                  ),
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 18,
+                    fontFamily: 'Prompt',
+                    letterSpacing: 0.12,
                   ),
                 ),
                 Divider(),
-                SizedBox(height: 8),
-                _detailRow("วันที่เรียน", Util.getBuddhistDate(_selectedDate),
-                    callback: () async {
+                _detailRow("วันที่เรียน", "$sDate/$sYear", callback: () async {
                   dynamic result = await Navigator.of(context).push(
                     PageRouteBuilder(
                       opaque: false,
@@ -100,9 +104,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                     });
                   }
                 }),
-                SizedBox(height: 8),
                 Divider(),
-                SizedBox(height: 8),
                 _detailRow("เวลาเริ่มเรียน", start.format(context),
                     callback: () {
                   showCustomTimePicker(
@@ -128,9 +130,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                     },
                   );
                 }),
-                SizedBox(height: 8),
                 Divider(),
-                SizedBox(height: 8),
                 _detailRow("เวลาเรียนเสร็จ", end.format(context), callback: () {
                   showCustomTimePicker(
                       context: context,
@@ -160,13 +160,16 @@ class _ReceiptPageState extends State<ReceiptPage> {
                     },
                   );
                 }),
-                SizedBox(height: 8),
                 Divider(),
                 TextField(
                   controller: teHour,
                   readOnly: true,
                   decoration: InputDecoration(
-                      border: InputBorder.none, hintText: "จำนวนชม./ครั้ง*"),
+                    border: InputBorder.none,
+                    hintText: "จำนวนชม./ครั้ง*",
+                    isDense: true,
+                    contentPadding: EdgeInsets.all(0),
+                  ),
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 18,
@@ -185,7 +188,6 @@ class _ReceiptPageState extends State<ReceiptPage> {
                     fontSize: 18,
                   ),
                 ),
-                SizedBox(height: 8),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
@@ -234,7 +236,8 @@ class _ReceiptPageState extends State<ReceiptPage> {
                       "ส่งใบยืนยันคลาสเรียน",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 18,
+                        fontFamily: 'Prompt',
                       ),
                     ),
                     style: ElevatedButton.styleFrom(

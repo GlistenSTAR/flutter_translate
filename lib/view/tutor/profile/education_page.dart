@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
+import 'package:tutor/model/StringsModel.dart';
 import 'package:tutor/utils/const.dart';
 import 'package:tutor/utils/globals.dart';
 import 'package:tutor/utils/util.dart';
+import 'package:tutor/widget/choose_string.dart';
+import 'package:tutor/widget/select_string.dart';
 
 class EducationPage extends StatefulWidget {
   EducationPage({Key? key, required this.info}) : super(key: key);
@@ -24,6 +27,7 @@ class _EducationPageState extends State<EducationPage> {
   final teYear = TextEditingController();
 
   late String year;
+  late StringsModel selectedYear = StringsModel(stringID: "", stringTH: "");
 
   List<String> years = [
     "น้อยกว่า 1",
@@ -131,17 +135,40 @@ class _EducationPageState extends State<EducationPage> {
                         TextInputType.numberWithOptions(decimal: true),
                   ),
                   Divider(height: 2),
-                  TextField(
-                    controller: teYear,
-                    style: TextStyle(fontSize: 16),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "ประสบการณ์การสอน (ปี) *ระบุเฉพาะตัวเลข*",
-                      hintStyle: TextStyle(color: COLOR.DARK_GREY),
-                    ),
-                    readOnly: true,
-                    onTap: () => showYearSheet(context),
+                  ChooseString(
+                    placeholder: "เลือก",
+                    selected: selectedYear,
+                    callback: () async {
+                      dynamic result = await Navigator.of(context).push(
+                        PageRouteBuilder(
+                          opaque: false,
+                          barrierColor: Colors.black54,
+                          pageBuilder: (_, __, ___) => SelectString(
+                            title: "เลือก",
+                            selected: selectedYear,
+                            models: StringsModel.getYears(),
+                          ),
+                        ),
+                      );
+
+                      if (result != null && result is StringsModel) {
+                        setState(() {
+                          selectedYear = result;
+                        });
+                      }
+                    },
                   ),
+                  // TextField(
+                  //   controller: teYear,
+                  //   style: TextStyle(fontSize: 16),
+                  //   decoration: InputDecoration(
+                  //     border: InputBorder.none,
+                  //     hintText: "ประสบการณ์การสอน (ปี) *ระบุเฉพาะตัวเลข*",
+                  //     hintStyle: TextStyle(color: COLOR.DARK_GREY),
+                  //   ),
+                  //   readOnly: true,
+                  //   onTap: () => showYearSheet(context),
+                  // ),
                   Divider(height: 2),
                   TextButton(
                     onPressed: () {

@@ -61,7 +61,7 @@ class ConversationCell extends StatelessWidget {
                       child: Text(
                         model.nickname,
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w900),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(width: 16),

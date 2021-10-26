@@ -42,7 +42,7 @@ class _SelectStringState extends State<SelectString> {
             ),
           ),
           Container(
-            height: (models.length + 2) * 62,
+            height: (models.length + 2) * 50,
             constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height * 0.6,
             ),
@@ -52,7 +52,8 @@ class _SelectStringState extends State<SelectString> {
                 top: Radius.circular(16),
               ),
             ),
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.symmetric(vertical: 16),
+            margin: EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -81,23 +82,25 @@ class _SelectStringState extends State<SelectString> {
                                 child: new Text(
                                   model.stringTH,
                                   style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                      fontFamily: 'Prompt',
                                       color: widget.selected.stringID ==
                                               model.stringID
                                           ? COLOR.YELLOW
                                           : COLOR.BLACK),
                                 ),
                               ),
-                              Divider(thickness: 1.5),
+                              Divider(
+                                thickness: 1,
+                                color: Color.fromRGBO(198, 198, 198, 1),
+                              ),
                             ],
                           ));
                     },
-                    separatorBuilder: (_, __) => SizedBox(height: 8),
+                    separatorBuilder: (_, __) => SizedBox(height: 0),
                     itemCount: models.length,
                   ),
                 ),
-                SizedBox(height: 16),
                 new GestureDetector(
                   onTap: () {
                     Navigator.of(context).pop();
@@ -106,8 +109,8 @@ class _SelectStringState extends State<SelectString> {
                     "ปิด",
                     style: TextStyle(
                       fontFamily: 'Prompt',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 )

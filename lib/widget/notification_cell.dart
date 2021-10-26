@@ -22,22 +22,26 @@ class NotificationCell extends StatelessWidget {
               borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
-                    offset: Offset(0, 0),
-                    color: Colors.grey.shade300,
-                    spreadRadius: 1,
-                    blurRadius: 1)
+                  offset: Offset(0, 0),
+                  color: Colors.grey.shade300,
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                ),
               ],
+              color: notification.isReaded
+                  ? Colors.white
+                  : Color.fromRGBO(232, 242, 250, 1),
             ),
             child: notification.imageUrl.isEmpty
                 ? Image.asset(
                     "images/common/logo.png",
                     fit: BoxFit.cover,
-                    width: 60,
-                    height: 60,
+                    width: 50,
+                    height: 50,
                   )
                 : Container(
-                    width: 60,
-                    height: 60,
+                    width: 50,
+                    height: 50,
                     child: CachedNetworkImage(
                       imageUrl: notification.imageUrl,
                       imageBuilder: (context, imageProvider) => Container(
@@ -69,12 +73,22 @@ class NotificationCell extends StatelessWidget {
               children: [
                 Text(
                   notification.title,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Prompt',
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.12,
+                  ),
                 ),
                 SizedBox(width: 16),
                 Text(
                   notification.message,
-                  style: TextStyle(color: COLOR.DARK_GREY),
+                  style: TextStyle(
+                    color: COLOR.DARK_GREY,
+                    fontSize: 14,
+                    fontFamily: 'Prompt',
+                    letterSpacing: 0.12,
+                  ),
                 ),
               ],
             ),

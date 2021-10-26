@@ -199,15 +199,26 @@ class QuizPage extends StatelessWidget {
           title,
           style: TextStyle(
             fontFamily: 'Prompt',
-            fontWeight: FontWeight.w700,
-            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+            letterSpacing: 0.12,
           ),
         ),
-        content: Text(
-          description,
-          style: TextStyle(
-            fontFamily: 'Prompt',
-            fontSize: 18,
+        content: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.black45,
+              ),
+            ),
+          ),
+          child: Text(
+            description,
+            style: TextStyle(
+              fontFamily: 'Prompt',
+              fontSize: 14,
+              letterSpacing: 0.12,
+            ),
           ),
         ),
         actions: [

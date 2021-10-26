@@ -73,9 +73,17 @@ class _ClassDetailState extends State<ClassDetail> {
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 0),
+                            color: Colors.grey,
+                            spreadRadius: 1,
+                            blurRadius: 2)
+                      ],
+                      color: Colors.white,
                     ),
                     child: Container(
                       height: 180,
@@ -89,6 +97,8 @@ class _ClassDetailState extends State<ClassDetail> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Prompt',
+                              letterSpacing: 0.12,
                             ),
                           ),
                           Row(
@@ -109,6 +119,9 @@ class _ClassDetailState extends State<ClassDetail> {
                                     "ไม่ได้เรียน",
                                     style: TextStyle(
                                       fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 0.12,
+                                      fontFamily: 'Prompt',
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
@@ -138,6 +151,9 @@ class _ClassDetailState extends State<ClassDetail> {
                                     "เรียนแล้ว",
                                     style: TextStyle(
                                       fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 0.12,
+                                      fontFamily: 'Prompt',
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
@@ -172,6 +188,8 @@ class _ClassDetailState extends State<ClassDetail> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
+                                letterSpacing: 0.12,
+                                fontFamily: 'Prompt',
                               ),
                             ),
                             if (invoiceLink.isNotEmpty)
@@ -207,6 +225,9 @@ class _ClassDetailState extends State<ClassDetail> {
                                       "ยืนยัน",
                                       style: TextStyle(
                                         fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                        letterSpacing: 0.12,
+                                        fontFamily: 'Prompt',
                                       ),
                                     ),
                                     style: ElevatedButton.styleFrom(

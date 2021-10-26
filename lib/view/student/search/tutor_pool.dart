@@ -92,7 +92,7 @@ class _TutorPoolState extends State<TutorPool> {
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 32),
+        padding: EdgeInsets.symmetric(horizontal: 15),
 
         //#####
         // decoration: BoxDecoration(
@@ -147,7 +147,7 @@ class _TutorPoolState extends State<TutorPool> {
                             dynamic result = await Navigator.of(context).push(
                               PageRouteBuilder(
                                 opaque: false,
-                                barrierColor: Colors.black54,
+                                barrierColor: Colors.black12,
                                 pageBuilder: (_, __, ___) => FilterPlane(
                                   title: "ระดับชั้น",
                                   filters: filteredLevels,

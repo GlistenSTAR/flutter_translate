@@ -27,10 +27,10 @@ class LikeCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                  offset: Offset(0, 0),
+                  offset: Offset(0, 2),
                   color: Colors.grey,
-                  spreadRadius: 3,
-                  blurRadius: 5)
+                  spreadRadius: 1,
+                  blurRadius: 2)
             ],
           ),
           child: Container(
@@ -98,7 +98,9 @@ class LikeCard extends StatelessWidget {
                                         model.nickname,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 28,
+                                          fontSize: 22,
+                                          fontFamily: 'Prompt',
+                                          letterSpacing: 0.12,
                                         ),
                                       ),
                                     ),
@@ -117,20 +119,23 @@ class LikeCard extends StatelessWidget {
                                   color: COLOR.YELLOW,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
+                                  fontFamily: 'Prompt',
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(height: 4),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Flexible(
                                 child: Text(
                                   model.name,
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     color: Color(0xFF999999),
+                                    fontFamily: 'Prompt',
                                   ),
                                 ),
                               ),
@@ -214,6 +219,8 @@ class LikeCard extends StatelessWidget {
             color: COLOR.BLUE,
             fontWeight: FontWeight.bold,
             fontSize: 16,
+            fontFamily: 'Prompt',
+            letterSpacing: 0.12,
           ),
         ),
         SizedBox(width: 8),

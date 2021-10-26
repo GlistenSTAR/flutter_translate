@@ -34,10 +34,10 @@ class HomeView extends StatelessWidget {
               "วิชายอดฮิต",
               style: TextStyle(
                 fontFamily: 'Prompt',
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.bold,
                 fontSize: 24,
                 color: COLOR.BLUE,
-                letterSpacing: 1,
+                letterSpacing: 0.38,
               ),
             ),
           ),
@@ -48,10 +48,10 @@ class HomeView extends StatelessWidget {
               "ติวสอบยอดฮิต",
               style: TextStyle(
                 fontFamily: 'Prompt',
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.bold,
                 fontSize: 24,
                 color: COLOR.BLUE,
-                letterSpacing: 1,
+                letterSpacing: 0.38,
               ),
             ),
           ),
@@ -65,10 +65,10 @@ class HomeView extends StatelessWidget {
                   "วิชา",
                   style: TextStyle(
                     fontFamily: 'Prompt',
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.bold,
                     fontSize: 24,
                     color: COLOR.BLUE,
-                    letterSpacing: 1,
+                    letterSpacing: 0.38,
                   ),
                 ),
                 InkWell(
@@ -81,7 +81,7 @@ class HomeView extends StatelessWidget {
                         text: "ทั้งหมด ",
                         style: TextStyle(
                           fontFamily: 'Prompt',
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.bold,
                           color: COLOR.YELLOW,
                           fontSize: 18,
                           letterSpacing: 0.5,
@@ -131,10 +131,10 @@ class HomeView extends StatelessWidget {
                   "ติวสอบ",
                   style: TextStyle(
                     fontFamily: 'Prompt',
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.bold,
                     fontSize: 24,
                     color: COLOR.BLUE,
-                    letterSpacing: 1,
+                    letterSpacing: 0.38,
                   ),
                 ),
                 InkWell(
@@ -147,7 +147,7 @@ class HomeView extends StatelessWidget {
                         text: "ทั้งหมด ",
                         style: TextStyle(
                           fontFamily: 'Prompt',
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.bold,
                           color: COLOR.YELLOW,
                           fontSize: 18,
                           letterSpacing: 0.5,
@@ -207,9 +207,9 @@ class HomeView extends StatelessWidget {
               child: Text(
                 "รีเควสของฉัน",
                 style: TextStyle(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.bold,
                   fontSize: 22,
-                  letterSpacing: 1,
+                  letterSpacing: 0.38,
                 ),
               ),
               style: ElevatedButton.styleFrom(

@@ -43,7 +43,7 @@ class HomeTopic extends StatelessWidget {
           Text(
             topicModel.titleTH,
             style: TextStyle(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
               fontSize: 16,
             ),
           )

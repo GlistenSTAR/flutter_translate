@@ -50,8 +50,8 @@ class _TutorBookingState extends State<TutorBooking> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
           ),
-          margin: EdgeInsets.all(16),
-          padding: EdgeInsets.all(42),
+          margin: EdgeInsets.all(18),
+          padding: EdgeInsets.all(35),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -73,7 +73,7 @@ class _TutorBookingState extends State<TutorBooking> {
                       fontFamily: 'Prompt',
                       color: COLOR.BLUE,
                       fontWeight: FontWeight.bold,
-                      fontSize: 22,
+                      fontSize: 24,
                     ),
                   ),
                 ),

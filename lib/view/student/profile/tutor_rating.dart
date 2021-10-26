@@ -49,6 +49,8 @@ class _TutorRatingState extends State<TutorRating> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Prompt',
+                letterSpacing: 0.12,
               ),
             ),
             Card(
@@ -76,8 +78,10 @@ class _TutorRatingState extends State<TutorRating> {
                     Text(
                       widget.model.tutorNickname,
                       style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Prompt',
+                        letterSpacing: 0.12,
                       ),
                     ),
                     SizedBox(height: 8),
@@ -101,12 +105,22 @@ class _TutorRatingState extends State<TutorRating> {
                     SizedBox(height: 8),
                     Text(
                       _rating >= 1 ? _types[(_rating - 1).toInt()] : "",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18, fontFamily: 'Prompt'),
                     ),
                     SizedBox(height: 8),
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: COLOR.TEXT_BORDER),
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 1),
+                            color: Colors.grey,
+                            spreadRadius: 0,
+                            blurRadius: 1,
+                          )
+                        ],
+                        color: Colors.white,
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: TextField(
@@ -119,6 +133,8 @@ class _TutorRatingState extends State<TutorRating> {
                             color: COLOR.TEXT_HINT,
                             fontWeight: FontWeight.w300,
                             fontSize: 12,
+                            fontFamily: 'Prompt',
+                            letterSpacing: 0.12,
                           ),
                         ),
                         minLines: 3,
@@ -147,8 +163,10 @@ class _TutorRatingState extends State<TutorRating> {
                       child: Text(
                         "ยืนยัน",
                         style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.bold,
                           fontSize: 18,
+                          fontFamily: 'Prompt',
+                          letterSpacing: 0.12,
                         ),
                       ),
                       style: ElevatedButton.styleFrom(

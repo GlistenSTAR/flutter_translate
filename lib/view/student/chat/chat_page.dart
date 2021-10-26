@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -429,9 +430,19 @@ class _ChatPageState extends State<ChatPage> {
                 onTap: () async {
                   dynamic result = await Navigator.of(context).push(
                     PageRouteBuilder(
-                        opaque: false,
-                        barrierColor: Colors.black54,
-                        pageBuilder: (_, __, ___) => ReceiptPage()),
+                      opaque: false,
+                      barrierColor: Color.fromRGBO(240, 240, 240, 0.5),
+                      pageBuilder: (_, __, ___) => ReceiptPage(),
+                      transitionsBuilder: (ctx, anim1, anim2, child) =>
+                          BackdropFilter(
+                        filter: ImageFilter.blur(
+                            sigmaX: anim1.value, sigmaY: anim1.value),
+                        child: FadeTransition(
+                          child: child,
+                          opacity: anim1,
+                        ),
+                      ),
+                    ),
                   );
 
                   if (result != null && result is Map<String, dynamic>) {
@@ -556,20 +567,21 @@ class _ChatPageState extends State<ChatPage> {
               height: 50,
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                      offset: Offset(0, 0),
-                      color: Colors.grey.shade300,
-                      spreadRadius: 1,
-                      blurRadius: 2)
-                ],
+                borderRadius: BorderRadius.circular(24), color: Colors.black12,
+                // boxShadow: [
+                //   BoxShadow(
+                //       offset: Offset(0, 0),
+                //       color: Colors.grey.shade300,
+                //       spreadRadius: 1,
+                //       blurRadius: 0)
+                // ],
               ),
               child: TextField(
                 style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500),
+                  color: Colors.black,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
+                ),
                 textAlignVertical: TextAlignVertical.center,
                 controller: teController,
                 decoration: InputDecoration(
@@ -668,12 +680,15 @@ class _ChatPageState extends State<ChatPage> {
               side: BorderSide(color: Colors.transparent, width: 0),
               borderRadius: BorderRadius.circular(24),
             ),
-            insetPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            insetPadding: EdgeInsets.symmetric(horizontal: 10),
+            actionsPadding: EdgeInsets.symmetric(horizontal: 10),
             title: Text(
               "รายงานผู้ใช้งาน ${partner.nickname}",
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.12,
+                fontFamily: 'Prompt',
               ),
             ),
             content: TextField(
@@ -681,7 +696,11 @@ class _ChatPageState extends State<ChatPage> {
               decoration: InputDecoration(
                 hintText: "ข้อความรายงาน",
               ),
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(
+                fontSize: 14,
+                fontFamily: 'Prompt',
+                letterSpacing: 0.12,
+              ),
             ),
             actions: [
               ElevatedButton(
@@ -691,19 +710,26 @@ class _ChatPageState extends State<ChatPage> {
                 },
                 child: Text(
                   "รายงาน",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Prompt',
+                    letterSpacing: 0.12,
+                  ),
                 ),
                 style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(COLOR.YELLOW),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side:
-                                BorderSide(color: COLOR.YELLOW, width: 2.0)))),
-              )
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(COLOR.YELLOW),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: COLOR.YELLOW, width: 2.0),
+                    ),
+                  ),
+                ),
+              ),
             ],
           );
         });

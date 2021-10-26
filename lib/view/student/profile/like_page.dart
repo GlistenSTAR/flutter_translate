@@ -34,6 +34,7 @@ class LikePage extends StatelessWidget {
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
                 color: COLOR.BLUE,
+                fontFamily: 'Prompt',
               ),
             ),
             SizedBox(height: 16),

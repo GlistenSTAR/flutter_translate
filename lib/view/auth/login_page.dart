@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                         "นักเรียน",
                         style: TextStyle(
                           fontFamily: 'Prompt',
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.bold,
                           color: isTutor ? Colors.white : COLOR.YELLOW,
                           fontSize: 20,
                           letterSpacing: 0.38,
@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                         "ติวเตอร์",
                         style: TextStyle(
                           fontFamily: 'Prompt',
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.bold,
                           color: isTutor ? COLOR.YELLOW : Colors.white,
                           fontSize: 20,
                           letterSpacing: 0.38,
@@ -146,6 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                           color: COLOR.YELLOW,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
+                          letterSpacing: 0.38,
                         ),
                       ),
                     ),
@@ -160,9 +161,9 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         fontFamily: 'Prompt',
                         color: COLOR.YELLOW,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        letterSpacing: 1,
+                        letterSpacing: 0.38,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -183,10 +184,10 @@ class _LoginPageState extends State<LoginPage> {
                   text: "ยังไม่มีแอคเคาท์?   ",
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.bold,
                     color: Colors.white,
                     fontFamily: 'Prompt',
-                    letterSpacing: 1,
+                    letterSpacing: 0.38,
                   ),
                   children: [
                     TextSpan(

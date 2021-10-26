@@ -109,13 +109,14 @@ class SearchViewState extends State<SearchView> {
                     teSearch.clear();
                   },
                   icon: CircleAvatar(
-                      backgroundColor: Colors.black.withOpacity(0.4),
-                      radius: 10,
-                      child: Icon(
-                        Icons.close,
-                        size: 16,
-                        color: Colors.white,
-                      )),
+                    backgroundColor: Colors.black.withOpacity(0.4),
+                    radius: 10,
+                    child: Icon(
+                      Icons.close,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -160,7 +161,7 @@ class SearchViewState extends State<SearchView> {
                             ),
                             Expanded(
                               child: Text(
-                                topicModel.titleTH,
+                                topicModel.longNameTH,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 20,
