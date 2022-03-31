@@ -73,7 +73,7 @@ flutter:
     - images/subject/
     - images/test/
     - images/trend/
-    - images/tutor/
+    # - images/tutor/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
