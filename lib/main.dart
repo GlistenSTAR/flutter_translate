@@ -55,6 +55,7 @@ void main() async {
   ///
   /// We use this channel in the `AndroidManifest.xml` file to override the
   /// default FCM channel to enable heads up notifications.
+
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -62,6 +63,7 @@ void main() async {
 
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
+  
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
